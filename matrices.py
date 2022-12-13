@@ -124,7 +124,7 @@ class Matriz:
             self.contenido_matriz[elemento-1] = valor
 
         except ValueError:
-            return Exception("La fila y la columna especificada debe ser un número entero mayor que 0")
+            raise Exception("La fila y la columna especificada debe ser un número entero mayor que 0")
 
 
     def pide_matriz(self):
