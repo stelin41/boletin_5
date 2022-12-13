@@ -243,7 +243,33 @@ class Matriz:
                 l.append(self[i][j]) 
         return l
     
+    def es_triangular_inf(self):
+        triangular_inf = True
+        for i in range (1,self.filas+1):
+            for j in range (1,self.columnas+1):
+                if i>j and self[i][j] != 0:
+                    triangular_inf = False
+        return triangular_inf
+                        
     
+    def tipo(self):
+        fila = self.fila == 1
+        columna = self.columna == 1
+        cuadrada = self.columna == self.fila
+        tri_inf = False
+        tri_sup = False
+        diagonal = False
+        if cuadrada:
+            if self == self.traspuesta():
+                simetrica = True 
+            if self.es_triangular_inf():
+                tri_inf = True
+            if self.traspuesta().es_triangular_inf():
+                tri_sup = True
+            if tri_inf and tri_sup:
+                diagonal
+                
+           
 
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para comprobar rápidamente que
@@ -251,13 +277,15 @@ if __name__ == "__main__":
 
      
 
-    mimatriz = Matriz([[1,2,3],[4,5,6]])
-    otramatriz =Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
-    #mimatriz.pide_matriz()
+    mimatriz = Matriz(2,3)
+    otramatriz =Matriz(3,4)
+    mimatriz.pide_matriz()
     print(mimatriz)
-    #otramatriz.pide_matriz()
+    otramatriz.pide_matriz()
     print(otramatriz)
     print("producto\n\n",mimatriz*otramatriz)
+    #mimatriz[-2][81] = 41
+    #print(mimatriz["A"]["B"])
     print(mimatriz.opuesta())
 
                                                   
