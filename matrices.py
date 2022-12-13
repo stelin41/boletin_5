@@ -10,24 +10,45 @@ Propósito:
 
 class Matriz:
 
-    def __init__(self, filas, columnas):
+    def __init__(self, *args):
         """
         Declaración de una matriz.
-        Debe especificarse el número de filas y columnas.
+        Puede declararse una matriz de dos formas:
+            Matriz(filas, columnas) # filas y columnas son enteros mayores que 0
+            Matriz(contenido_matriz) # contenido_matriz de tipo lisa
         """
+        self.contenido_matriz = []
+        # Esto es para el caso donde se define la matriz y su contenido
+        if len(args) == 1:
+            contenido = args[0]
+            # En caso de que sea una matriz fila
+            if type(contenido[0]) != list:
+                self.filas = 1
+                self.contenido_matriz = contenido
+                self.columnas = len(contenido)
 
-        self.filas = filas
-        self.columnas = columnas
+            else:
+                self.filas = len(contenido)
+                self.columnas = len(contenido[0])
 
-        if filas == 1:
-            self.contenido_matriz = [None] * columnas
-        else:
+                for fila in contenido:
+                    # Primero se comprueba que las dimensiones son válidas
+                    if len(fila)!=self.columnas:
+                        raise Exception("Todas las filas de la matriz deben tener el mismo número de elementos.")
+
+                    self.contenido_matriz.append(Matriz(fila))
+
+
+        # Esto es en el caso donde solo se define la matriz pero no su contenido
+        elif len(args) == 2:
+            self.filas = args[0]
+            self.columnas = args[1]
+
             # Se hace de este modo para evitar que se guarden referencias a la misma
             # dirección de memoria y que a la hora de modificar la matriz se
             # modifique de una manera no deseada
-            self.contenido_matriz = []
-            for j in range(filas):
-                fila = Matriz(1, columnas)
+            for j in range(self.filas):
+                fila = Matriz([None] * self.columnas)
                 self.contenido_matriz.append(fila)
 
                 
