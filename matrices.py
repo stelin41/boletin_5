@@ -31,7 +31,7 @@ class Matriz:
                 self.contenido_matriz.append(fila)
 
                 
-"""
+    """
     def __str__(self):
         #Presentación del estado actual de la matriz.
 
@@ -80,8 +80,8 @@ class Matriz:
             imprimir += "\n"
 
         return imprimir
-    
     """
+
     def __str__(self):
         """
         Presentación del estado actual de la matriz.
@@ -140,7 +140,7 @@ class Matriz:
     def pide_matriz(self):
         for i in range (self.filas):
             for j in range (self.columnas):
-                self.contenido_matriz[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: ")
+                self[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: "))
     def dimensiones(self):                                     
         return self.filas, self.columnas
           
