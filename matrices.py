@@ -19,7 +19,8 @@ class Matriz:
         self.filas = filas
         self.columnas = columnas
 
-        # Se hace de este modo para evitar que se guarden referencias a la misma        # dirección de memoria y que a la hora de modificar la matriz se 
+        # Se hace de este modo para evitar que se guarden referencias a la misma        
+        # dirección de memoria y que a la hora de modificar la matriz se 
         # modifique de una manera no deseada
         fila = [None]*columnas
         self.contenido_matriz = []
@@ -94,7 +95,14 @@ class Matriz:
         except IndexError:
             print(f'No esixte el elemento {fila},{columna}')
             return False
-
+      
+    def pide_matriz(self):
+        for i in range (self.filas):
+            for j in range (self.columnas):
+                self.contenido_matriz[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: ")
+    
+        ######
+        ######
 
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para comprobar rápidamente que
@@ -109,3 +117,7 @@ if __name__ == "__main__":
     print(mimatriz)
     mimatriz.cambia_elemento(-2,81,41)
     print(mimatriz.elemento("A","B"))
+    mimatriz.pide_matriz()
+
+                                                  
+   
