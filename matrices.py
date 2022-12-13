@@ -1,6 +1,6 @@
 """
 Autores:
-    - Jose Romero Conde
+    - José Romero Conde
     - Stevan Lino Gartz
 
 Propósito:
@@ -101,7 +101,7 @@ class Matriz:
         """
         Devuelve el elemento especificado.
         """
-        print(type(elemento))
+        #print(type(elemento))
         try:
             elemento = int(elemento)
             if elemento<1:
@@ -165,12 +165,14 @@ class Matriz:
                 for j in range (1,self.columnas+1):
                     matriz_producto[i][j]=a*self[i][j]
         elif type(a)==Matriz:
-            matriz_producto=Matriz(self.filas,self.columnas)
+            matriz_producto=Matriz(self.filas,a.columnas)
             if self.columnas==a.filas:
+                print("La multiplicación entre matrices está definida.")
                 for i in range (1,self.filas+1):
                     for j in range (1,a.columnas+1):
-                        for n in range self.columnas:
-                            matriz_producto[i][j]=self[i][n]*a[n][j]
+                        matriz_producto[i][j]=0
+                        for n in range (1,self.columnas+1):
+                            matriz_producto[i][j]=float(self[i][n]*a[n][j])+matriz_producto[i][j]
         return matriz_producto
     
     def __add__(self,matriz2):
@@ -194,7 +196,20 @@ class Matriz:
                     matriz_res[i][j]=self[i][j]-matriz2[i][j]
         return matriz_res
         
-    
+    def matriz_nula(m,n):
+        matriz_nula=Matriz(m,n)
+        for i in range m:
+            for j in range n:
+                matriz_nula[i][j]=0
+        return matriz_nula
+    def matriz_identidad(m):
+        matriz_identidad=Matriz(m,m)
+        for i in range m:
+            for j in range m:
+                if i=j:
+                    matriz_identidad[i][j]=1
+                else: matriz_identidad[i][j]=0
+        return matriz_identidad
     
 
 if __name__ == "__main__":
@@ -203,12 +218,13 @@ if __name__ == "__main__":
 
      
 
-    mimatriz = Matriz(4,5)
-
-    mimatriz[2][3] = 414243
-    print(mimatriz[2][3])
+    mimatriz = Matriz(2,3)
+    otramatriz =Matriz(3,4)
     mimatriz.pide_matriz()
     print(mimatriz)
+    otramatriz.pide_matriz()
+    print(otramatriz)
+    print("producto\n\n",mimatriz*otramatriz)
     #mimatriz[-2][81] = 41
     #print(mimatriz["A"]["B"])
     print(mimatriz.opuesta())
