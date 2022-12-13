@@ -159,7 +159,7 @@ class Matriz:
             for j in range (1,self.columnas+1):
                 self[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: "))
                 
-                
+                          
     def dimension(self):                                     
         return self.filas, self.columnas
           
@@ -186,7 +186,7 @@ class Matriz:
         """
         B=𝛼A o B=A'*A
         """
-        if type(a)==float:
+        if type(a)==float or type(a)==int:
             matriz_producto=Matriz(self.filas,self.columnas)
             for i in range (1,self.filas+1):
                 for j in range (1,self.columnas+1):
@@ -222,21 +222,27 @@ class Matriz:
                 for j in range (1,self.columnas+1):
                     matriz_res[i][j]=self[i][j]-matriz2[i][j]
         return matriz_res
+    def media(self):
+        lista=self.lista_elementos()
+        a=0
+        for i in lista:
+            a+=float(i) 
+        m=a/len(lista)
+        return m
+    def mayor(self):
+        lista=self.lista_elementos()
+        return max(lista)
+    def menor(self):
+        lista=self.lista_elementos()
+        return min(lista)
         
-    def matriz_nula(m,n):
-        matriz_nula=Matriz(m,n)
-        for i in range m:
-            for j in range n:
-                matriz_nula[i][j]=0
-        return matriz_nula
-    def matriz_identidad(m):
-        matriz_identidad=Matriz(m,m)
-        for i in range m:
-            for j in range m:
-                if i=j:
-                    matriz_identidad[i][j]=1
-                else: matriz_identidad[i][j]=0
-        return matriz_identidad
+    def lista_elementos(self):
+        l=[]
+        for i in range (1,self.filas+1):
+            for j in range (1,self.columnas+1):
+                l.append(self[i][j]) 
+        return l
+    
     
 
 if __name__ == "__main__":
