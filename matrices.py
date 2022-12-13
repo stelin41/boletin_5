@@ -180,9 +180,6 @@ class Matriz:
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para comprobar rápidamente que
     # todo funiona correctamente
-
-    from matrices import Matriz
-
     mimatriz = Matriz(4,5)
 
     mimatriz[2][3] = 414243
