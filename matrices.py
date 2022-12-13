@@ -151,15 +151,17 @@ class Matriz:
                 matriztras[j][i]=self[i][j]
         return matriztras
     
-    def opuesta
-    """
-    La matriz opuesta (denotada por -A) viene dada por la expresión --> -A = -I * A
-    """
-    matrizop=Matriz(self.columnas,self.filas)
+    def opuesta(self):
+        """
+        La matriz opuesta (denotada por -A) viene dada por la expresión --> -A = -I * A
+        """
+        matrizop=Matriz(self.columnas,self.filas)
         for i in range (self.filas):
             for j in range (self.columnas):
                 matrizop[i][j]=-self[i][j]
         return matrizop
+    #def __add__(self,matriz2):
+        
     
     
 
