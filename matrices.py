@@ -30,6 +30,58 @@ class Matriz:
                 fila = Matriz(1, columnas)
                 self.contenido_matriz.append(fila)
 
+                
+"""
+    def __str__(self):
+        #Presentación del estado actual de la matriz.
+
+        imprimir = ""
+
+        # Se busca los valores con más caracteres de cada columna, para así
+        # decidir el número de espacios en blanco que los separa.
+        longitud_maxima = []
+        for j in range(self.columnas):
+            valores = []
+            for i in range(self.filas):
+                valores.append(len(str(self.contenido_matriz[i][j])))
+
+            longitud_maxima.append(max(valores))
+
+        for i in range(self.filas):
+            for j in range(self.columnas):
+                # Se mide la diferencia entre el elemento con más caracteres de
+                # la columna y el actual. Esa diferencia +1 es el número de
+                # espacios que aparecen después del elemento para que esté
+                # correctamente presentado.
+                longitud_elemento_actual = len(str(self.contenido_matriz[i][j]))
+                espaciado = longitud_maxima[j]-longitud_elemento_actual+1
+                if j==0:
+                    if i==0:
+                        imprimir += "/ " +str(self.contenido_matriz[i][j]) + " "*espaciado
+
+                    elif i==self.filas-1:
+                        imprimir += "\\ " +str(self.contenido_matriz[i][j]) + " "*espaciado
+
+                    else:
+                        imprimir += "| " +str(self.contenido_matriz[i][j]) + " "*espaciado
+
+                elif j==self.filas:
+
+                    if i==0:
+                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "\\"
+
+                    elif i==self.filas-1:
+                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "/"
+
+                    else:
+                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "|"
+
+                else:imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado
+            imprimir += "\n"
+
+        return imprimir
+    
+    """
     def __str__(self):
         """
         Presentación del estado actual de la matriz.
