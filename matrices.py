@@ -251,15 +251,13 @@ if __name__ == "__main__":
 
      
 
-    mimatriz = Matriz(2,3)
-    otramatriz =Matriz(3,4)
-    mimatriz.pide_matriz()
+    mimatriz = Matriz([[1,2,3],[4,5,6]])
+    otramatriz =Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
+    #mimatriz.pide_matriz()
     print(mimatriz)
-    otramatriz.pide_matriz()
+    #otramatriz.pide_matriz()
     print(otramatriz)
     print("producto\n\n",mimatriz*otramatriz)
-    #mimatriz[-2][81] = 41
-    #print(mimatriz["A"]["B"])
     print(mimatriz.opuesta())
 
                                                   
