@@ -128,8 +128,8 @@ class Matriz:
 
 
     def pide_matriz(self):
-        for i in range (self.filas):
-            for j in range (self.columnas):
+        for i in range (1,self.filas+1):
+            for j in range (1,self.columnas+1):
                 self[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: "))
                 
                 
@@ -139,8 +139,8 @@ class Matriz:
         
     def traspuesta(self):
         matriztras=Matriz(self.columnas,self.filas)
-        for i in range (self.filas):
-            for j in range (self.columnas):
+        for i in range (1,self.filas+1):
+            for j in range (1,self.columnas+1):
                 matriztras[j][i]=self[i][j]
         return matriztras
     
@@ -149,29 +149,32 @@ class Matriz:
         """
         La matriz opuesta (denotada por -A) viene dada por la expresión --> -A = -I * A
         """
-        matrizop=Matriz(self.columnas,self.filas)
-        for i in range (self.filas):
-            for j in range (self.columnas):
+        matrizop=Matriz(self.filas,self.columnas)
+        for i in range (1,self.filas+1):
+            for j in range (1,self.columnas+1):
                 matrizop[i][j]=-self[i][j]
         return matrizop
+    
+    
     def __add__(self,matriz2):
         matriz_res=Matriz(self.columnas,self.filas)
-        if dimension(self) != dimension(matriz2):
-            print: ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
+        if self.dimension != matriz2.dimension:
+            print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
         else: 
-            for i in range (self.filas):
-                for j in range (self.columnas):
+            for i in range (1,self.filas+1):
+                for j in range (1,self.columnas+1):
                     matriz_res[i][j]=self[i][j]+matriz2[i][j]
         return matriz_res
         
+    
     def __sub__(self,matriz2):
         matriz_res=Matriz(self.columnas,self.filas)
-        if dimension(self) != dimension(matriz2):
-            print: ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
+        if self.dimension != matriz2.dimension:
+            print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
         else: 
-            for i in range (self.filas):
-                for j in range (self.columnas):
-                    matrizs_res[i][j]=self[i][j]-matriz2[i][j]
+            for i in range (1,self.filas+1):
+                for j in range (1,self.columnas+1):
+                    matriz_res[i][j]=self[i][j]-matriz2[i][j]
         return matriz_res
         
     
@@ -180,10 +183,14 @@ class Matriz:
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para comprobar rápidamente que
     # todo funiona correctamente
+
+     
+
     mimatriz = Matriz(4,5)
 
     mimatriz[2][3] = 414243
     print(mimatriz[2][3])
+    mimatriz.pide_matriz()
     print(mimatriz)
     #mimatriz[-2][81] = 41
     #print(mimatriz["A"]["B"])
