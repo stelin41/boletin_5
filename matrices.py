@@ -144,7 +144,24 @@ class Matriz:
     def dimensiones(self):                                     
         return self.filas, self.columnas
           
-     
+    def traspuesta(self):
+        matriztras=Matriz(self.columnas,self.filas)
+        for i in range (self.filas):
+            for j in range (self.columnas):
+                matriztras[j][i]=self[i][j]
+        return matriztras
+    
+    def opuesta
+    """
+    La matriz opuesta (denotada por -A) viene dada por la expresión --> -A = -I * A
+    """
+    matrizop=Matriz(self.columnas,self.filas)
+        for i in range (self.filas):
+            for j in range (self.columnas):
+                matrizop[i][j]=-self[i][j]
+        return matrizop
+    
+    
 
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para comprobar rápidamente que
@@ -159,7 +176,7 @@ if __name__ == "__main__":
     print(mimatriz)
     #mimatriz[-2][81] = 41
     #print(mimatriz["A"]["B"])
-      
+    print(mimatriz.opuesta())
 
                                                   
    
