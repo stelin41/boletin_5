@@ -109,7 +109,7 @@ class Matriz:
             return self.contenido_matriz[elemento-1]
 
         except ValueError:
-            raise Exception("La fila y la columna especificada debe ser un número entero mayor que 0")
+            raise "La fila y la columna especificada debe ser un número entero mayor que 0"
 
 
 
@@ -124,7 +124,7 @@ class Matriz:
             self.contenido_matriz[elemento-1] = valor
 
         except ValueError:
-            raise Exception("La fila y la columna especificada debe ser un número entero mayor que 0")
+            return "La fila y la columna especificada debe ser un número entero mayor que 0"
 
 
     def pide_matriz(self):
@@ -133,7 +133,7 @@ class Matriz:
                 self[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: "))
                 
                 
-    def dimensiones(self):                                     
+    def dimension(self):                                     
         return self.filas, self.columnas
           
         
@@ -154,7 +154,25 @@ class Matriz:
             for j in range (self.columnas):
                 matrizop[i][j]=-self[i][j]
         return matrizop
-    #def __add__(self,matriz2):
+    def __add__(self,matriz2):
+        matriz_res=Matriz(self.columnas,self.filas)
+        if dimension(self) != dimension(matriz2):
+            print: ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
+        else: 
+            for i in range (self.filas):
+                for j in range (self.columnas):
+                    matriz_res[i][j]=self[i][j]+matriz2[i][j]
+        return matriz_res
+        
+    def __sub__(self,matriz2):
+        matriz_res=Matriz(self.columnas,self.filas)
+        if dimension(self) != dimension(matriz2):
+            print: ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
+        else: 
+            for i in range (self.filas):
+                for j in range (self.columnas):
+                    matrizs_res[i][j]=self[i][j]-matriz2[i][j]
+        return matriz_res
         
     
     
