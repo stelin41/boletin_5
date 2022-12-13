@@ -155,6 +155,23 @@ class Matriz:
                 matrizop[i][j]=-self[i][j]
         return matrizop
     
+    def __mul__(self,a):
+        """
+        B=𝛼A o B=A'*A
+        """
+        if type(a)==float:
+            matriz_producto=Matriz(self.filas,self.columnas)
+            for i in range (1,self.filas+1):
+                for j in range (1,self.columnas+1):
+                    matriz_producto[i][j]=a*self[i][j]
+        elif type(a)==Matriz:
+            matriz_producto=Matriz(self.filas,self.columnas)
+            if self.columnas==a.filas:
+                for i in range (1,self.filas+1):
+                    for j in range (1,a.columnas+1):
+                        for n in range self.columnas:
+                            matriz_producto[i][j]=self[i][n]*a[n][j]
+        return matriz_producto
     
     def __add__(self,matriz2):
         matriz_res=Matriz(self.columnas,self.filas)
