@@ -146,6 +146,12 @@ class Matriz:
 
         except ValueError:
             return "La fila y la columna especificada debe ser un número entero mayor que 0"
+        
+    def diagonal(self):
+        elementos_diagonal = []
+        for i in min([self.filas, self.columnas]):
+            elementos_diagonal.append(self.contenido_matriz[i][i])
+        return elementos_diagonal
 
 
     def pide_matriz(self):
