@@ -26,7 +26,6 @@ class Matriz:
         self.contenido_matriz = []
         for j in range(filas):
             self.contenido_matriz.append(fila[:])
-
     def __str__(self):
         """ 
         Presentación del estado actual de la matriz.
@@ -52,8 +51,28 @@ class Matriz:
                 # correctamente presentado.
                 longitud_elemento_actual = len(str(self.contenido_matriz[i][j]))
                 espaciado = longitud_maxima[j]-longitud_elemento_actual+1
-                imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado
-
+                if j==0:
+                    if i==0:
+                        imprimir += "/ " +str(self.contenido_matriz[i][j]) + " "*espaciado
+                    
+                    elif i==self.filas-1:
+                        imprimir += "\\ " +str(self.contenido_matriz[i][j]) + " "*espaciado
+                    
+                    else:
+                        imprimir += "| " +str(self.contenido_matriz[i][j]) + " "*espaciado
+                
+                elif j==self.filas:
+                    
+                    if i==0:
+                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "\\" 
+                    
+                    elif i==self.filas-1:
+                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "/" 
+                    
+                    else: 
+                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "|" 
+                
+                else:imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado
             imprimir += "\n"
 
         return imprimir
@@ -100,9 +119,10 @@ class Matriz:
         for i in range (self.filas):
             for j in range (self.columnas):
                 self.contenido_matriz[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: ")
-    
-        ######
-        ######
+    def dimensiones(self):                                     
+        return self.filas, self.columnas
+          
+     
 
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para comprobar rápidamente que
