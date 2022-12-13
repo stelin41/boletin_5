@@ -97,12 +97,11 @@ class Matriz:
 
         return imprimir
 
-
     def __getitem__(self, elemento):
         """
         Devuelve el elemento especificado.
         """
-
+        print(type(elemento))
         try:
             elemento = int(elemento)
             if elemento<1:
@@ -110,12 +109,9 @@ class Matriz:
             return self.contenido_matriz[elemento-1]
 
         except ValueError:
-            print("La fila y la columna especificada debe ser un número entero mayor que 0")
-            return False
+            raise "La fila y la columna especificada debe ser un número entero mayor que 0"
 
-        except IndexError:
-            print(f'No esixte el elemento {fila},{columna}')
-            return False
+
 
     def __setitem__(self, elemento, valor):
         """
@@ -128,28 +124,26 @@ class Matriz:
             self.contenido_matriz[elemento-1] = valor
 
         except ValueError:
-            print("La fila y la columna especificada debe ser un número entero mayor que 0")
-            return False
-
-        except IndexError:
-            print(f'No esixte el elemento {fila},{columna}')
-            return False
-
+            return "La fila y la columna especificada debe ser un número entero mayor que 0"
 
 
     def pide_matriz(self):
         for i in range (self.filas):
             for j in range (self.columnas):
                 self[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: "))
+                
+                
     def dimensiones(self):                                     
         return self.filas, self.columnas
           
+        
     def traspuesta(self):
         matriztras=Matriz(self.columnas,self.filas)
         for i in range (self.filas):
             for j in range (self.columnas):
                 matriztras[j][i]=self[i][j]
         return matriztras
+    
     
     def opuesta(self):
         """
