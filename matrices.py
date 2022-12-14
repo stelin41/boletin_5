@@ -190,6 +190,7 @@ class Matriz:
                 matrizop[i][j]=-self[i][j]
         return matrizop
     
+
     def __mul__(self,a):
         """
         B=𝛼A o B=A'*A
@@ -310,7 +311,7 @@ if __name__ == "__main__":
     # 5.a Obtención de una fila de la matriz
     print(mimatriz[1])
 
-    # 5.b Obtención de una columna de la matriz (TODO)
+    # 5.b Obtención de una columna de la matriz
     
     # 5.c Obtención de la diagonal de la matriz
     #print(otramatriz.diagonal())
@@ -333,15 +334,20 @@ if __name__ == "__main__":
     # 10. Producto de un escalar por un vector
     print(otramatriz*2)
 
-    # 11.a Matriz nula a partir de las dimensiones dadas (TODO)
+    # 11.a Matriz nula a partir de las dimensiones dadas
 
-    # 11.b Matriz identidad a partir de las dimensiones dadas (TODO)
+    # 11.b Matriz identidad a partir de las dimensiones dadas
 
-    # 12. Matriz traspuesta (TODO)
+    # 12. Matriz traspuesta
 
-    # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior. (TODO)
+    # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior.
 
-    print("Producto:\n",mimatriz*otramatriz)
-    print(mimatriz.opuesta())
+    # 14. Comprobación de si es una matriz mágica
+
+    # 15.a Obtención del mayor elemento de la matriz
+
+    # 15.b Obtención del menor elemento de la matriz
+
+    # 15.c Obtención de la media de los valores de los elementos de la matriz
 
                                                 
