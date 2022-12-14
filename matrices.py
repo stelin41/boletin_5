@@ -333,7 +333,13 @@ if __name__ == "__main__":
     # 10. Producto de un escalar por un vector
     print(otramatriz*2)
 
-    # 11.
+    # 11.a Matriz nula a partir de las dimensiones dadas (TODO)
+
+    # 11.b Matriz identidad a partir de las dimensiones dadas (TODO)
+
+    # 12. Matriz traspuesta (TODO)
+
+    # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior. (TODO)
 
     print("Producto:\n",mimatriz*otramatriz)
     print(mimatriz.opuesta())
