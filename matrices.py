@@ -158,7 +158,7 @@ class Matriz:
         """
         elementos_diagonal = []
         for i in range(1, min([self.filas, self.columnas])+1):
-            elementos_diagonal.append(self.contenido_matriz[i][i])
+            elementos_diagonal.append(self[i][i])
         return elementos_diagonal
 
 
@@ -212,8 +212,8 @@ class Matriz:
         return matriz_producto
     
     def __add__(self,matriz2):
-        matriz_res=Matriz(self.columnas,self.filas)
-        if self.dimension != matriz2.dimension:
+        matriz_res=Matriz(self.filas,matriz2.columnas)
+        if self.dimension() != matriz2.dimension():
             print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
         else: 
             for i in range (1,self.filas+1):
@@ -223,8 +223,8 @@ class Matriz:
         
     
     def __sub__(self,matriz2):
-        matriz_res=Matriz(self.columnas,self.filas)
-        if self.dimension != matriz2.dimension:
+        matriz_res=Matriz(self.filas,matriz2.columnas)
+        if self.dimension() != matriz2.dimension():
             print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
         else: 
             for i in range (1,self.filas+1):
@@ -314,7 +314,7 @@ if __name__ == "__main__":
     # 5.b Obtención de una columna de la matriz
     
     # 5.c Obtención de la diagonal de la matriz
-    #print(otramatriz.diagonal())
+    print(otramatriz.diagonal())
 
     # 6. Obtención de las dimensiones de la matriz
     print(otramatriz.dimension())
