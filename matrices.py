@@ -47,7 +47,7 @@ class Matriz:
             # Se hace de este modo para evitar que se guarden referencias a la misma
             # dirección de memoria y que a la hora de modificar la matriz se
             # modifique de una manera no deseada
-            for j in range(self.filas):
+            for j in range(1,self.filas+1):
                 fila = Matriz([None] * self.columnas)
                 self.contenido_matriz.append(fila)
 
@@ -64,45 +64,45 @@ class Matriz:
         # Se busca los valores con más caracteres de cada columna, para así
         # decidir el número de espacios en blanco que los separa.
         longitud_maxima = []
-        for j in range(self.columnas):
+        for j in range(1,self.columnas+1):
             valores = []
-            for i in range(self.filas):
-                valores.append(len(str(self.contenido_matriz[i][j])))
+            for i in range(1,self.filas+1):
+                print(j,i)
+                valores.append(len(str(self[i][j])))
 
             longitud_maxima.append(max(valores))
 
-        for i in range(self.filas):
-            for j in range(self.columnas):
+        for i in range(1,self.filas+1):
+            for j in range(1,self.columnas+1):
                 # Se mide la diferencia entre el elemento con más caracteres de
                 # la columna y el actual. Esa diferencia +1 es el número de
                 # espacios que aparecen después del elemento para que esté
                 # correctamente presentado.
-                longitud_elemento_actual = len(str(self.contenido_matriz[i][j]))
-                espaciado = longitud_maxima[j]-longitud_elemento_actual+1
+                longitud_elemento_actual = len(str(self[i][j]))
+                espaciado = longitud_maxima[j-1]-longitud_elemento_actual+1
                 a = b = ''
-                if j==0:
-                    if i==0:
+                if j==1:
+                    if i==1:
                         a = "/ " 
 
-                    elif i==self.filas-1:
+                    elif i==self.filas:
                         a = "\\ " 
 
                     else:
                         a = "| " 
 
-                elif j==self.filas:
+                elif j==self.columnas:
 
-                    if i==0:
+                    if i==1:
                         b= "\\"
 
-                    elif i==self.filas-1:
+                    elif i==self.filas:
                         b= "/"
 
                     else:
                         b= "|"
-
-                else:imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado
-                imprimir += a + str(self.contenido_matriz[i][j]) + " "*espaciado + b
+                
+                imprimir += a + str(self[i][j]) + " "*espaciado + b
             imprimir += "\n"
 
         return imprimir
@@ -294,15 +294,14 @@ if __name__ == "__main__":
      
     # Declaración de matrices
     mimatriz = Matriz(2,3)
-    otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
+    otramatriz = Matriz([[1,2,3,4,5,6,7,8],[5,6,7,8,9,10,11,12],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],[9,10,11,12,13,14,15,16],])
     otramatriz[1][1] = 1337
     print(otramatriz)
-
+    print(otramatriz.bonito())
     mimatriz.pide_matriz()
     print(mimatriz)
     
     print("Producto:\n",mimatriz*otramatriz)
     print(mimatriz.opuesta())
 
-                                                  
-   
+                                                
