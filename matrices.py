@@ -155,7 +155,7 @@ class Matriz:
         Devuelve los elementos de la diagonal de la matriz.
         """
         elementos_diagonal = []
-        for i in min([self.filas, self.columnas]):
+        for i in range(1, min([self.filas, self.columnas])+1):
             elementos_diagonal.append(self.contenido_matriz[i][i])
         return elementos_diagonal
 
@@ -290,15 +290,50 @@ if __name__ == "__main__":
     # todo funiona correctamente
 
      
-    # Declaración de matrices
-    mimatriz = Matriz(2,3)
-    otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
+    # 1. Definición de matrices
+    mimatriz = Matriz(2,3)                                      # Definición a partir de sus dimensiones
+    otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])     # Definición a partir de su contenido
+    matriz2 = Matriz([[9,10,11,12],[5,6,7,8],[1,2,3,4]])
+
+    # 2.a Cambio de un elemento
     otramatriz[1][1] = 1337
+
+    # 2.b Obtención de un elemneto
+    print(otramatriz[1][1])
+
+    # 3. Presentación de una matriz
     print(otramatriz)
 
+    # 4. Captura por teclado de los elementos de una matriz
     mimatriz.pide_matriz()
     print(mimatriz)
+
+    # 5.a Obtención de una fila de la matriz
+    print(mimatriz[1])
+
+    # 5.b Obtención de una columna de la matriz (TODO)
     
+    # 5.c Obtención de la diagonal de la matriz
+    #print(otramatriz.diagonal())
+
+    # 6. Obtención de las dimensiones de la matriz
+    print(otramatriz.dimension())
+
+    # 7.a Suma de matrices
+    print(otramatriz+matriz2)
+
+    # 7.b Resta de matrices
+    print(otramatriz-matriz2)
+
+    # 8. Matriz opuesta (Preguntar si -A es correcto)
+    print(otramatriz.opuesta())
+
+    # 9. Producto de matrices
+    print(mimatriz*otramatriz)
+
+    # 10. Producto de un escalar por un vector
+    print(otramatriz*2)
+
     print("Producto:\n",mimatriz*otramatriz)
     print(mimatriz.opuesta())
 
