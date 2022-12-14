@@ -332,6 +332,8 @@ if __name__ == "__main__":
     # 10. Producto de un escalar por un vector
     print(otramatriz*2)
 
+    # 11.
+
     print("Producto:\n",mimatriz*otramatriz)
     print(mimatriz.opuesta())
 
