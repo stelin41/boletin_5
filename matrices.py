@@ -55,8 +55,8 @@ class Matriz:
             raise Exception('Hay que especificar las dimensiones de la matriz o su contenido.')
 
                 
-    """
-    def __str__(self):
+  
+    def bonito(self):
         #Presentación del estado actual de la matriz.
 
         imprimir = ""
@@ -79,32 +79,34 @@ class Matriz:
                 # correctamente presentado.
                 longitud_elemento_actual = len(str(self.contenido_matriz[i][j]))
                 espaciado = longitud_maxima[j]-longitud_elemento_actual+1
+                a = b = ''
                 if j==0:
                     if i==0:
-                        imprimir += "/ " +str(self.contenido_matriz[i][j]) + " "*espaciado
+                        a = "/ " 
 
                     elif i==self.filas-1:
-                        imprimir += "\\ " +str(self.contenido_matriz[i][j]) + " "*espaciado
+                        a = "\\ " 
 
                     else:
-                        imprimir += "| " +str(self.contenido_matriz[i][j]) + " "*espaciado
+                        a = "| " 
 
                 elif j==self.filas:
 
                     if i==0:
-                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "\\"
+                        b= "\\"
 
                     elif i==self.filas-1:
-                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "/"
+                        b= "/"
 
                     else:
-                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "|"
+                        b= "|"
 
                 else:imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado
+                imprimir += a + str(self.contenido_matriz[i][j]) + " "*espaciado + b
             imprimir += "\n"
 
         return imprimir
-    """
+  
 
     def __str__(self):
         """
