@@ -51,6 +51,9 @@ class Matriz:
                 fila = Matriz([None] * self.columnas)
                 self.contenido_matriz.append(fila)
 
+        else:
+            raise Exception('Hay que especificar las dimensiones de la matriz o su contenido.')
+
                 
     """
     def __str__(self):
@@ -148,6 +151,9 @@ class Matriz:
             return "La fila y la columna especificada debe ser un número entero mayor que 0"
         
     def diagonal(self):
+        """
+        Devuelve los elementos de la diagonal de la matriz.
+        """
         elementos_diagonal = []
         for i in min([self.filas, self.columnas]):
             elementos_diagonal.append(self.contenido_matriz[i][i])
