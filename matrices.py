@@ -56,7 +56,7 @@ class Matriz:
 
                 
   
-    def bonito(self):
+    def __str__(self):
         #Presentación del estado actual de la matriz.
 
         imprimir = ""
@@ -108,7 +108,7 @@ class Matriz:
         return imprimir
   
 
-    def __str__(self):
+    def otra(self):
         """
         Presentación del estado actual de la matriz.
         """
