@@ -158,7 +158,7 @@ class Matriz:
         """
         elementos_diagonal = []
         for i in range(1, min([self.filas, self.columnas])+1):
-            elementos_diagonal.append(self[i][i])
+            elementos_diagonal.append(self.contenido_matriz[i][i])
         return elementos_diagonal
 
 
@@ -190,7 +190,6 @@ class Matriz:
                 matrizop[i][j]=-self[i][j]
         return matrizop
     
-
     def __mul__(self,a):
         """
         B=𝛼A o B=A'*A
@@ -212,8 +211,8 @@ class Matriz:
         return matriz_producto
     
     def __add__(self,matriz2):
-        matriz_res=Matriz(self.filas,matriz2.columnas)
-        if self.dimension() != matriz2.dimension():
+        matriz_res=Matriz(self.columnas,self.filas)
+        if self.dimension != matriz2.dimension:
             print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
         else: 
             for i in range (1,self.filas+1):
@@ -223,8 +222,8 @@ class Matriz:
         
     
     def __sub__(self,matriz2):
-        matriz_res=Matriz(self.filas,matriz2.columnas)
-        if self.dimension() != matriz2.dimension():
+        matriz_res=Matriz(self.columnas,self.filas)
+        if self.dimension != matriz2.dimension:
             print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
         else: 
             for i in range (1,self.filas+1):
@@ -259,37 +258,56 @@ class Matriz:
                 l.append(self[i][j]) 
         return l
     
-
+    ##tipos
+    
+    def es_cuadrada(self):
+        cuadrada = self.columna == self.fila
+        return cuadrada
+    
     def es_triangular_inf(self):
         triangular_inf = True
+        if es_cuadrada = False: triangular_inf = False
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
                 if i>j and self[i][j] != 0:
                     triangular_inf = False
         return triangular_inf
-                        
     
-    def tipo(self):
+    def es_triangular_sup(self):
+        if self.traspuesta().es_triangular_inf():
+                triangular_sup = True
+        return triangular_sup
+    
+    def es_diagonal(self):
+        if es_triagonal_sup() == es_triagonal_inf() == True:
+            diagonal = True
+        return diagonal
+                              
+    def es_fila(self):
         fila = self.fila == 1
-        columna = self.columna == 1
-        cuadrada = self.columna == self.fila
-        tri_inf = False
-        tri_sup = False
-        diagonal = False
-        if cuadrada:
-            if self == self.traspuesta():
-                simetrica = True 
-            if self.es_triangular_inf():
-                tri_inf = True
-            if self.traspuesta().es_triangular_inf():
-                tri_sup = True
-            if tri_inf and tri_sup:
-                diagonal
-
+        return fila
+    
+    def es_columna(self):
+        fila = self.columna == 1
+        return columna
+    
+    def es_simetrica(self):
+        if self.traspuesta() = self: simetrica = True
+        return simetrica
+   
+    def tipo(self):
+        if es_cuadrada() == True: print('\nEs cuadrdada.')
+        if es_triangular_inf() == True: print('\nEs triangular inferior.')
+        if es_triangular_sup() == True: print('\nEs triangular superior.')
+        if es_diagonal() == True: print('\nEs diagonal.')
+        if es_fila() == True: print('\nEs una matriz fila.')
+        if es_columna() == True: print('\nEs una matriz columna.')  
+        if es_simetrica() == True: print('\nEs una matriz simétrica.')  
 
 
 if __name__ == "__main__":
-    # Este script prueba diferentes funcionalidades para comprobar rápidamente que
+    # Este script prueba diferentes funcionalidades para 
+    # comprobar rápidamente que
     # todo funiona correctamente
 
      
@@ -311,10 +329,10 @@ if __name__ == "__main__":
     # 5.a Obtención de una fila de la matriz
     print(mimatriz[1])
 
-    # 5.b Obtención de una columna de la matriz
+    # 5.b Obtención de una columna de la matriz (TODO)
     
     # 5.c Obtención de la diagonal de la matriz
-    print(otramatriz.diagonal())
+    #print(otramatriz.diagonal())
 
     # 6. Obtención de las dimensiones de la matriz
     print(otramatriz.dimension())
@@ -334,23 +352,15 @@ if __name__ == "__main__":
     # 10. Producto de un escalar por un vector
     print(otramatriz*2)
 
-    # 11.a Matriz nula a partir de las dimensiones dadas
+    # 11.a Matriz nula a partir de las dimensiones dadas (TODO)
 
-    # 11.b Matriz identidad a partir de las dimensiones dadas
+    # 11.b Matriz identidad a partir de las dimensiones dadas (TODO)
 
-    # 12. Matriz traspuesta
-    print(otramatriz.traspuesta())
+    # 12. Matriz traspuesta (TODO)
 
-    # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior.
+    # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior. (TODO)
 
-    # 14. Comprobación de si es una matriz mágica
+    print("Producto:\n",mimatriz*otramatriz)
+    print(mimatriz.opuesta())
 
-    # 15.a Obtención del mayor elemento de la matriz
-    print(otramatriz.mayor())
-
-    # 15.b Obtención del menor elemento de la matriz
-    print(otramatriz.menor())
-
-    # 15.c Obtención de la media de los valores de los elementos de la matriz
-    print(otramatriz.media())
                                                 
