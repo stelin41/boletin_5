@@ -56,7 +56,7 @@ class Matriz:
 
                 
   
-    def __str__(self):
+    def print(self):
         #Presentación del estado actual de la matriz.
 
         imprimir = ""
@@ -108,7 +108,7 @@ class Matriz:
         return imprimir
   
 
-    def otra(self):
+    def __str__(self):
         """
         Presentación del estado actual de la matriz.
         """
@@ -295,16 +295,17 @@ if __name__ == "__main__":
     # Declaración de matrices
     mimatriz = Matriz(2,3)
     otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
+    matriz2 = Matriz([[5,6,7,8],[9,10,11,12],[1,2,3,4]])
     otramatriz[1][1] = 1337
 
     # 2.b Obtención de un elemneto
     print(otramatriz[1][1])
 
     # 3. Presentación de una matriz
-    print(otramatriz)
+    otramatriz.print()
 
+    # 4. Obtención de una matriz por teclado
     mimatriz.pide_matriz()
-    print(mimatriz)
 
     # 5.a Obtención de una fila de la matriz
     print(mimatriz[1])
