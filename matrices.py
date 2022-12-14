@@ -339,15 +339,18 @@ if __name__ == "__main__":
     # 11.b Matriz identidad a partir de las dimensiones dadas
 
     # 12. Matriz traspuesta
+    print(otramatriz.traspuesta())
 
     # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior.
 
     # 14. Comprobación de si es una matriz mágica
 
     # 15.a Obtención del mayor elemento de la matriz
+    print(otramatriz.mayor())
 
     # 15.b Obtención del menor elemento de la matriz
+    print(otramatriz.menor())
 
     # 15.c Obtención de la media de los valores de los elementos de la matriz
-
+    print(otramatriz.media())
                                                 
