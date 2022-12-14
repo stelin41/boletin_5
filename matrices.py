@@ -166,7 +166,7 @@ class Matriz:
                 self[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: "))
                 
                           
-    def dimension(self):                                     
+    def dimension(self):
         return self.filas, self.columnas
           
         
@@ -228,6 +228,8 @@ class Matriz:
                 for j in range (1,self.columnas+1):
                     matriz_res[i][j]=self[i][j]-matriz2[i][j]
         return matriz_res
+
+
     def media(self):
         lista=self.lista_elementos()
         a=0
@@ -235,12 +237,17 @@ class Matriz:
             a+=float(i) 
         m=a/len(lista)
         return m
+
+
     def mayor(self):
         lista=self.lista_elementos()
         return max(lista)
+
+
     def menor(self):
         lista=self.lista_elementos()
         return min(lista)
+
         
     def lista_elementos(self):
         l=[]
@@ -249,6 +256,7 @@ class Matriz:
                 l.append(self[i][j]) 
         return l
     
+
     def es_triangular_inf(self):
         triangular_inf = True
         for i in range (1,self.filas+1):
@@ -274,24 +282,24 @@ class Matriz:
                 tri_sup = True
             if tri_inf and tri_sup:
                 diagonal
-                
-           
+
+
 
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para comprobar rápidamente que
     # todo funiona correctamente
 
      
-
+    # Declaración de matrices
     mimatriz = Matriz(2,3)
-    otramatriz =Matriz(3,4)
+    otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
+    otramatriz[1][1] = 1337
+    print(otramatriz)
+
     mimatriz.pide_matriz()
     print(mimatriz)
-    otramatriz.pide_matriz()
-    print(otramatriz)
-    print("producto\n\n",mimatriz*otramatriz)
-    #mimatriz[-2][81] = 41
-    #print(mimatriz["A"]["B"])
+    
+    print("Producto:\n",mimatriz*otramatriz)
     print(mimatriz.opuesta())
 
                                                   
