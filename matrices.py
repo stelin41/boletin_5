@@ -47,7 +47,7 @@ class Matriz:
             # Se hace de este modo para evitar que se guarden referencias a la misma
             # dirección de memoria y que a la hora de modificar la matriz se
             # modifique de una manera no deseada
-            for j in range(self.filas):
+            for j in range(1,self.filas+1):
                 fila = Matriz([None] * self.columnas)
                 self.contenido_matriz.append(fila)
 
@@ -55,7 +55,7 @@ class Matriz:
             raise Exception('Hay que especificar las dimensiones de la matriz o su contenido.')
 
                 
-    """
+  
     def __str__(self):
         #Presentación del estado actual de la matriz.
 
@@ -64,49 +64,51 @@ class Matriz:
         # Se busca los valores con más caracteres de cada columna, para así
         # decidir el número de espacios en blanco que los separa.
         longitud_maxima = []
-        for j in range(self.columnas):
+        for j in range(1,self.columnas+1):
             valores = []
-            for i in range(self.filas):
-                valores.append(len(str(self.contenido_matriz[i][j])))
+            for i in range(1,self.filas+1):
+                print(j,i)
+                valores.append(len(str(self[i][j])))
 
             longitud_maxima.append(max(valores))
 
-        for i in range(self.filas):
-            for j in range(self.columnas):
+        for i in range(1,self.filas+1):
+            for j in range(1,self.columnas+1):
                 # Se mide la diferencia entre el elemento con más caracteres de
                 # la columna y el actual. Esa diferencia +1 es el número de
                 # espacios que aparecen después del elemento para que esté
                 # correctamente presentado.
-                longitud_elemento_actual = len(str(self.contenido_matriz[i][j]))
-                espaciado = longitud_maxima[j]-longitud_elemento_actual+1
-                if j==0:
-                    if i==0:
-                        imprimir += "/ " +str(self.contenido_matriz[i][j]) + " "*espaciado
+                longitud_elemento_actual = len(str(self[i][j]))
+                espaciado = longitud_maxima[j-1]-longitud_elemento_actual+1
+                a = b = ''
+                if j==1:
+                    if i==1:
+                        a = "/ " 
 
-                    elif i==self.filas-1:
-                        imprimir += "\\ " +str(self.contenido_matriz[i][j]) + " "*espaciado
-
-                    else:
-                        imprimir += "| " +str(self.contenido_matriz[i][j]) + " "*espaciado
-
-                elif j==self.filas:
-
-                    if i==0:
-                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "\\"
-
-                    elif i==self.filas-1:
-                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "/"
+                    elif i==self.filas:
+                        a = "\\ " 
 
                     else:
-                        imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado + "|"
+                        a = "| " 
 
-                else:imprimir += str(self.contenido_matriz[i][j]) + " "*espaciado
+                elif j==self.columnas:
+
+                    if i==1:
+                        b= "\\"
+
+                    elif i==self.filas:
+                        b= "/"
+
+                    else:
+                        b= "|"
+                
+                imprimir += a + str(self[i][j]) + " "*espaciado + b
             imprimir += "\n"
 
         return imprimir
-    """
+  
 
-    def __str__(self):
+    def otra(self):
         """
         Presentación del estado actual de la matriz.
         """
@@ -290,12 +292,9 @@ if __name__ == "__main__":
     # todo funiona correctamente
 
      
-    # 1. Definición de matrices
-    mimatriz = Matriz(2,3)                                      # Definición a partir de sus dimensiones
-    otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])     # Definición a partir de su contenido
-    matriz2 = Matriz([[9,10,11,12],[5,6,7,8],[1,2,3,4]])
-
-    # 2.a Cambio de un elemento
+    # Declaración de matrices
+    mimatriz = Matriz(2,3)
+    otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
     otramatriz[1][1] = 1337
 
     # 2.b Obtención de un elemneto
@@ -304,7 +303,6 @@ if __name__ == "__main__":
     # 3. Presentación de una matriz
     print(otramatriz)
 
-    # 4. Captura por teclado de los elementos de una matriz
     mimatriz.pide_matriz()
     print(mimatriz)
 
@@ -337,5 +335,4 @@ if __name__ == "__main__":
     print("Producto:\n",mimatriz*otramatriz)
     print(mimatriz.opuesta())
 
-                                                  
-   
+                                                
