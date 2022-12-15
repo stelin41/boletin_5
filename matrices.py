@@ -192,6 +192,22 @@ class Matriz:
         archivo.write(contenido)
         archivo.close()
 
+
+    def cargar(self, archivo):
+        archivo = open(archivo, 'r')
+        contenido = archivo.read()
+        archivo.close()
+
+        matrices = []
+        contenido = contenido.split("\n")
+        nueva_matriz = []
+        for linea in contenido:
+            if linea == "":
+                pass
+
+        
+        return matrices
+
         
     def diagonal_principal(self, *args):
         """
@@ -465,4 +481,4 @@ if __name__ == "__main__":
 
 
     # Cargar la matriz desde un archivo             
-    #Matriz.cargar('matrices.csv')
+    #Matriz().cargar('matrices.csv')
