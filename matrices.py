@@ -319,7 +319,7 @@ class Matriz:
         return self.traspuesta().es_triangular_inf()
     
     def es_diagonal(self):
-        return self.es_triagonal_sup() == self.es_triagonal_inf()
+        return self.es_triangular_sup() == self.es_triangular_inf()
                               
     def es_fila(self): 
         return self.filas == 1
