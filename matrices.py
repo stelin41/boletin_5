@@ -150,10 +150,12 @@ class Matriz:
         """
         #print(type(elemento))
         try:
-            elemento = int(elemento)
-            if elemento<1:
+            if type(elemento) == int:
+                if elemento<1:
+                    raise ValueError
+                return self.contenido_matriz[elemento-1]
+            else:
                 raise ValueError
-            return self.contenido_matriz[elemento-1]
 
         except ValueError:
             raise "La fila y la columna especificada debe ser un número entero mayor que 0"
@@ -173,7 +175,7 @@ class Matriz:
         except ValueError:
             return "La fila y la columna especificada debe ser un número entero mayor que 0"
         
-    def diagonal(self):
+    def diagonal(self, desplazamiento=0):
         """
         Devuelve los elementos de la diagonal de la matriz.
         """
@@ -181,7 +183,12 @@ class Matriz:
         for i in range(1, min([self.filas, self.columnas])+1):
             elementos_diagonal.append(self[i][i])
         return elementos_diagonal
-
+    
+    def columna(self, columna):
+        col = []
+        for i in range(1,self.filas+1):
+            col.append(self[i][columna])
+        return Matriz(col)
 
     def pide_matriz(self):
         for i in range (1,self.filas+1):
@@ -232,7 +239,7 @@ class Matriz:
         return matriz_producto
     
     def __add__(self,matriz2):
-        matriz_res=Matriz(self.columnas,self.filas)
+        matriz_res=Matriz(self.filas,self.columnas)
         if self.dimension != matriz2.dimension:
             print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
         else: 
@@ -243,7 +250,7 @@ class Matriz:
         
     
     def __sub__(self,matriz2):
-        matriz_res=Matriz(self.columnas,self.filas)
+        matriz_res=Matriz(self.filas,self.columnas)
         if self.dimension != matriz2.dimension:
             print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
         else: 
@@ -300,9 +307,7 @@ class Matriz:
         return triangular_sup
     
     def es_diagonal(self):
-        if es_triagonal_sup() == es_triagonal_inf() == True:
-            diagonal = True
-        return diagonal
+        return self.es_triagonal_sup() == self.es_triagonal_inf()
                               
     def es_fila(self):
         fila = self.fila == 1
@@ -313,8 +318,7 @@ class Matriz:
         return columna
     
     def es_simetrica(self):
-        if self.traspuesta() == self: simetrica = True
-        return simetrica
+        return self.traspuesta() == self
    
     def tipo(self):
         if es_cuadrada() == True: print('\nEs cuadrdada.')
@@ -353,6 +357,7 @@ if __name__ == "__main__":
     print(mimatriz[1])
 
     # 5.b Obtención de una columna de la matriz
+    print(otramatriz.columna(1), 'lol')
     
     # 5.c Obtención de la diagonal de la matriz
     print(otramatriz.diagonal())
