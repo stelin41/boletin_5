@@ -201,16 +201,10 @@ class Matriz:
         """
         Devuelve los elementos de la diagonal de la matriz.
         """
-        desplazamiento = args[0]
-        elementos_diagonal = []
-        for i in range(1, min([self.filas, self.columnas])+1):
-            if desplazamiento < 0:
-                f = i - desplazamiento
-                c = i
-            else:
-                desplazamiento
-            elementos_diagonal.append(self[f][c])
-        return elementos_diagonal
+        l= []
+        for i in range (1,self.columnas)
+            l.append(self[i][self.columnas+1-i])
+        return l
     
     def columna(self, columna):
         col = []
@@ -344,8 +338,25 @@ class Matriz:
         if self.es_fila() : print('Es una matriz fila.')
         if self.es_columna() : print('Es una matriz columna.')  
         if self.es_simetrica() : print('Es una matriz simétrica.')  
+            
+     def _suma_lista(self,lista):
+         a = 0
+         for i in range len(lista):
+             a += lista[i]
+         return a    
 
 
+     def es_magica(self):
+         magica = False
+         if self.es_cuadrada():
+            a = self._suma_lista.columna(1)
+            if self._suma.diagonal_principal() == self._suma.diagonal_opuesta() == a:
+                magica = True
+            for i in range self.columnas:
+                if self._suma_lista.columna(i) != a or self._suma_lista.fila(i) != a:
+                    magica = False
+         magica  
+          
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para 
     # comprobar rápidamente que
@@ -416,6 +427,9 @@ if __name__ == "__main__":
     print(otramatriz.es_simetrica())
     
     # 14. Matriz mágica
+    print(otramatriz.es_magica())
+    magica = Matriz([[8,1,6],[3,5,7],[4,9,2]])
+    print(otramatriz.es_magica())
 
     # 15.a Obtención del mayor valor
     print(otramatriz.mayor())
