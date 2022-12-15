@@ -202,14 +202,7 @@ class Matriz:
     
     
     def opuesta(self):
-        """
-        La matriz opuesta (denotada por -A) viene dada por la expresión --> -A = -I * A
-        """
-        matrizop=Matriz(self.filas,self.columnas)
-        for i in range (1,self.filas+1):
-            for j in range (1,self.columnas+1):
-                matrizop[i][j]=-self[i][j]
-        return matrizop
+        return matrizop self*(-1)
     
     def __mul__(self,a):
         """
@@ -282,12 +275,11 @@ class Matriz:
     ##tipos
     
     def es_cuadrada(self):
-        cuadrada = self.columna == self.fila
-        return cuadrada
+        return self.columnas == self.filas
     
     def es_triangular_inf(self):
         triangular_inf = True
-        if not es_cuadrada: triangular_inf = False
+        if not self.es_cuadrada: triangular_inf = False
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
                 if i>j and self[i][j] != 0:
@@ -295,35 +287,36 @@ class Matriz:
         return triangular_inf
     
     def es_triangular_sup(self):
+        triangular_sup = False
         if self.traspuesta().es_triangular_inf():
                 triangular_sup = True
         return triangular_sup
     
     def es_diagonal(self):
-        if es_triagonal_sup() == es_triagonal_inf() == True:
+        diagonal = False
+        if self.es_triangular_sup() == self.es_triangular_inf() == True:
             diagonal = True
         return diagonal
                               
-    def es_fila(self):
-        fila = self.fila == 1
-        return fila
+    def es_fila(self): 
+        return self.filas == 1
     
     def es_columna(self):
-        fila = self.columna == 1
-        return columna
+        return self.columnas == 1
     
     def es_simetrica(self):
+        simetrica = False
         if self.traspuesta() == self: simetrica = True
         return simetrica
    
     def tipo(self):
-        if es_cuadrada() == True: print('\nEs cuadrdada.')
-        if es_triangular_inf() == True: print('\nEs triangular inferior.')
-        if es_triangular_sup() == True: print('\nEs triangular superior.')
-        if es_diagonal() == True: print('\nEs diagonal.')
-        if es_fila() == True: print('\nEs una matriz fila.')
-        if es_columna() == True: print('\nEs una matriz columna.')  
-        if es_simetrica() == True: print('\nEs una matriz simétrica.')  
+        if self.es_cuadrada(): print('Es cuadrdada.')
+        if self.es_triangular_inf() : print('Es triangular inferior.')
+        if self.es_triangular_sup() : print('Es triangular superior.')
+        if self.es_diagonal() : print('Es diagonal.')
+        if self.es_fila() : print('Es una matriz fila.')
+        if self.es_columna() : print('Es una matriz columna.')  
+        if self.es_simetrica() : print('Es una matriz simétrica.')  
 
 
 if __name__ == "__main__":
@@ -372,7 +365,7 @@ if __name__ == "__main__":
     # 9. Producto de matrices
     print(mimatriz*otramatriz)
 
-    # 10. Producto de un escalar por un vector
+    # 10. Producto de un escalar por una matriz.
     print(otramatriz*2)
 
     # 11.a Matriz nula a partir de las dimensiones dadas
@@ -385,7 +378,14 @@ if __name__ == "__main__":
     print(otramatriz.traspuesta())
 
     # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior. (TODO)
-
+    Matriz(3,3,tipo_matriz='identidad').tipo()
+    print(otramatriz.es_fila())
+    print(otramatriz.es_columna())
+    print(otramatriz.es_triangular_inf())
+    print(otramatriz.es_triangular_sup())
+    print(otramatriz.es_cuadrada())
+    print(otramatriz.es_simetrica())
+    
     # 14. Matriz mágica
 
     # 15.a Obtención del mayor valor
