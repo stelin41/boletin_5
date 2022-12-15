@@ -179,22 +179,15 @@ class Matriz:
         """
         Devuelve los elementos de la diagonal de la matriz.
         """
-        desplazamiento = 0
-        if len(args) != 0:
-            desplazamiento = args
-
+        desplazamiento = args[0]
         elementos_diagonal = []
-        if desplazamiento < 0:
-            for j in range(1, min([self.filas+desplazamiento, self.columnas])+1):
-                i = j - desplazamiento
-                elementos_diagonal.append(self[i][j])
-
-        else:
-            for i in range(1, min([self.filas, self.columnas-desplazamiento])+1):
-                j = i + desplazamiento
-                print(i,j,desplazamiento,'test')
-                elementos_diagonal.append(self[i][j])
-
+        for i in range(1, min([self.filas, self.columnas])+1):
+            if desplazamiento < 0:
+                f = i - desplazamiento
+                c = i
+            else:
+                desplazamiento
+            elementos_diagonal.append(self[f][c])
         return elementos_diagonal
     
     def diagonal_opuesta(self, *args):
@@ -319,7 +312,7 @@ class Matriz:
         return self.traspuesta().es_triangular_inf()
     
     def es_diagonal(self):
-        return self.es_triangular_sup() == self.es_triangular_inf()
+        return self.es_triagonal_sup() == self.es_triagonal_inf()
                               
     def es_fila(self): 
         return self.filas == 1
@@ -339,23 +332,23 @@ class Matriz:
         if self.es_columna() : print('Es una matriz columna.')  
         if self.es_simetrica() : print('Es una matriz simétrica.')  
             
-     def _suma_lista(self,lista):
-         a = 0
-         for i in range len(lista):
-             a += lista[i]
-         return a    
+    def _suma_lista(self,lista):
+        a = 0
+        for i in range (len(lista)):
+            a += lista[i]
+        return a    
 
 
-     def es_magica(self):
-         magica = False
-         if self.es_cuadrada():
+    def es_magica(self):
+        magica = False
+        if self.es_cuadrada():
             a = self._suma_lista.columna(1)
             if self._suma.diagonal_principal() == self._suma.diagonal_opuesta() == a:
                 magica = True
-            for i in range self.columnas:
+            for i in range (self.columnas):
                 if self._suma_lista.columna(i) != a or self._suma_lista.fila(i) != a:
                     magica = False
-         magica  
+        magica  
           
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para 
@@ -387,8 +380,7 @@ if __name__ == "__main__":
     print(otramatriz.columna(1))
     
     # 5.c Obtención de la diagonal de la matriz
-    print(otramatriz)
-    print(otramatriz.diagonal_principal(1))
+    print(otramatriz.diagonal_principal())
 
     # 6. Obtención de las dimensiones de la matriz
     print(otramatriz.dimension())
