@@ -10,11 +10,13 @@ Propósito:
 
 class Matriz:
 
-    def __init__(self, *args):
+    def __init__(self, *args, tipo_matriz='normal'):
         """
         Declaración de una matriz.
-        Puede declararse una matriz de dos formas:
+        Puede declararse una matriz de las siguientes formas:
             Matriz(filas, columnas) # filas y columnas son enteros mayores que 0
+            Matriz(filas, columnas, tipo_matriz='nula')
+            Matriz(filas, columnas, tipo_matriz='identidad')
             Matriz(contenido_matriz) # contenido_matriz de tipo lisa
         """
         self.contenido_matriz = []
@@ -44,12 +46,31 @@ class Matriz:
             self.filas = args[0]
             self.columnas = args[1]
 
-            # Se hace de este modo para evitar que se guarden referencias a la misma
-            # dirección de memoria y que a la hora de modificar la matriz se
-            # modifique de una manera no deseada
-            for j in range(1,self.filas+1):
-                fila = Matriz([None] * self.columnas)
-                self.contenido_matriz.append(fila)
+            if tipo_matriz == 'identidad':
+                if self.columnas != self.filas:
+                    raise Exception('La matriz identidad debe ser cuadrada.')
+
+                for j in range(1,self.filas+1):
+                    fila = Matriz([0] * self.columnas)
+                    fila[j] = 1
+                    self.contenido_matriz.append(fila)
+                
+            else:
+                if tipo_matriz == 'normal':
+                    contenido = None
+                elif tipo_matriz == 'nula':
+                    contenido = 0
+                else:
+                    raise Exception(f'No se soporta una matriz de tipo {tipo_matriz}.')
+                    
+                # Se hace de este modo para evitar que se guarden referencias a la misma
+                # dirección de memoria y que a la hora de modificar la matriz se
+                # modifique de una manera no deseada
+                for j in range(1,self.filas+1):
+                    fila = Matriz([contenido] * self.columnas)
+                    self.contenido_matriz.append(fila)
+            
+        
 
         else:
             raise Exception('Hay que especificar las dimensiones de la matriz o su contenido.')
@@ -158,7 +179,7 @@ class Matriz:
         """
         elementos_diagonal = []
         for i in range(1, min([self.filas, self.columnas])+1):
-            elementos_diagonal.append(self.contenido_matriz[i][i])
+            elementos_diagonal.append(self[i][i])
         return elementos_diagonal
 
 
@@ -266,7 +287,7 @@ class Matriz:
     
     def es_triangular_inf(self):
         triangular_inf = True
-        if es_cuadrada = False: triangular_inf = False
+        if not es_cuadrada: triangular_inf = False
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
                 if i>j and self[i][j] != 0:
@@ -292,7 +313,7 @@ class Matriz:
         return columna
     
     def es_simetrica(self):
-        if self.traspuesta() = self: simetrica = True
+        if self.traspuesta() == self: simetrica = True
         return simetrica
    
     def tipo(self):
@@ -310,11 +331,13 @@ if __name__ == "__main__":
     # comprobar rápidamente que
     # todo funiona correctamente
 
-     
-    # Declaración de matrices
-    mimatriz = Matriz(2,3)
     otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
     matriz2 = Matriz([[5,6,7,8],[9,10,11,12],[1,2,3,4]])
+
+    # 1. Definición de una matriz a partir de sus dimensiones
+    mimatriz = Matriz(2,3)
+
+    # 2.a Asignación de un elemento
     otramatriz[1][1] = 1337
 
     # 2.b Obtención de un elemneto
@@ -329,10 +352,10 @@ if __name__ == "__main__":
     # 5.a Obtención de una fila de la matriz
     print(mimatriz[1])
 
-    # 5.b Obtención de una columna de la matriz (TODO)
+    # 5.b Obtención de una columna de la matriz
     
     # 5.c Obtención de la diagonal de la matriz
-    #print(otramatriz.diagonal())
+    print(otramatriz.diagonal())
 
     # 6. Obtención de las dimensiones de la matriz
     print(otramatriz.dimension())
@@ -352,15 +375,25 @@ if __name__ == "__main__":
     # 10. Producto de un escalar por un vector
     print(otramatriz*2)
 
-    # 11.a Matriz nula a partir de las dimensiones dadas (TODO)
+    # 11.a Matriz nula a partir de las dimensiones dadas
+    print(Matriz(3,2,tipo_matriz='nula'))
 
-    # 11.b Matriz identidad a partir de las dimensiones dadas (TODO)
+    # 11.b Matriz identidad a partir de las dimensiones dadas
+    print(Matriz(3,3,tipo_matriz='identidad'))
 
-    # 12. Matriz traspuesta (TODO)
+    # 12. Matriz traspuesta
+    print(otramatriz.traspuesta())
 
     # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior. (TODO)
 
-    print("Producto:\n",mimatriz*otramatriz)
-    print(mimatriz.opuesta())
+    # 14. Matriz mágica
 
+    # 15.a Obtención del mayor valor
+    print(otramatriz.mayor())
+
+    # 15.b Obtención del menor valor
+    print(otramatriz.menor())
+
+    # 15.c Obtención del la media de los valores de los elementos
+    print(otramatriz.media())
                                                 
