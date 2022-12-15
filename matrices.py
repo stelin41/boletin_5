@@ -21,10 +21,7 @@ class Matriz:
         """
         self.contenido_matriz = []
         # Esto es para el caso donde se define la matriz y su contenido
-        if len(args) == 0:
-            self.filas = 0
-            self.columnas = 0
-        elif len(args) == 1:
+        if len(args) == 1:
             contenido = args[0]
             # En caso de que sea una matriz fila
             if type(contenido[0]) != list:
@@ -177,37 +174,6 @@ class Matriz:
 
         except ValueError:
             return "La fila y la columna especificada debe ser un número entero mayor que 0"
-
-    
-    def guardar(self, archivo, matrices):
-        contenido = ""
-        for matriz in matrices:
-            for i in range(1, matriz.filas+1):
-                for j in range(1, matriz.columnas+1):
-                    contenido += str(matriz[i][j]) + ","
-                contenido = contenido[:-1]+"\n"
-            contenido += "\n"
-        
-        archivo = open(archivo, 'w')
-        archivo.write(contenido)
-        archivo.close()
-
-
-    def cargar(self, archivo):
-        archivo = open(archivo, 'r')
-        contenido = archivo.read()
-        archivo.close()
-
-        matrices = []
-        contenido = contenido.split("\n")
-        nueva_matriz = []
-        for linea in contenido:
-            if linea == "":
-                pass
-
-        
-        return matrices
-
         
     def diagonal_principal(self, *args):
         """
@@ -215,7 +181,7 @@ class Matriz:
         """
         desplazamiento = 0
         if len(args) != 0:
-            desplazamiento = args[0]
+            desplazamiento = args
 
         elementos_diagonal = []
         if desplazamiento < 0:
@@ -236,7 +202,7 @@ class Matriz:
         Devuelve los elementos de la diagonal de la matriz.
         """
         l= []
-        for i in range (1,self.columnas):
+        for i in range (1,self.columnas+1):
             l.append(self[i][self.columnas+1-i])
         return l
     
@@ -380,16 +346,26 @@ class Matriz:
         return a    
 
 
-    def es_magica(self):
+        def es_magica(self):
+        
+            def _suma_lista(lista):
+                s = 0
+                lista = lista.contenido_matriz
+                for i in range (len(lista)):
+                    s += lista[i]
+                return s 
+    
+        
         magica = False
         if self.es_cuadrada():
-            a = self._suma_lista.columna(1)
-            if self._suma.diagonal_principal() == self._suma.diagonal_opuesta() == a:
+            a = _suma_lista(self.columna(1))
+            if _suma_lista(self.diagonal_principal()) == _suma_lista(self.diagonal_opuesta()) == a:
                 magica = True
-            for i in range (self.columnas):
-                if self._suma_lista.columna(i) != a or self._suma_lista.fila(i) != a:
+            for i in range (1,self.columnas+1):
+                if _suma_lista(self.columna(i)) != a or _suma_lista(self[i]) != a:
                     magica = False
-        magica  
+        return magica  
+            
           
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para 
@@ -422,8 +398,6 @@ if __name__ == "__main__":
     
     # 5.c Obtención de la diagonal de la matriz
     print(otramatriz.diagonal_principal())
-    print(otramatriz.diagonal_principal(2)) # El 2 indica que es la diagonal que empieza en la columna 3
-    print(otramatriz.diagonal_principal(-1)) # El -1 indica que es la diagonal que empieza en la fila 2
 
     # 6. Obtención de las dimensiones de la matriz
     print(otramatriz.dimension())
@@ -474,11 +448,4 @@ if __name__ == "__main__":
 
     # 15.c Obtención del la media de los valores de los elementos
     print(otramatriz.media())
-
-
-    # Guardar la matriz en un archivo
-    Matriz().guardar('matrices.csv', [otramatriz, matriz2])
-
-
-    # Cargar la matriz desde un archivo             
-    #Matriz().cargar('matrices.csv')
+                                                
