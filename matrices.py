@@ -209,7 +209,7 @@ class Matriz:
     
     
     def opuesta(self):
-        return matrizop self*(-1)
+        return self*(-1)
     
     def __mul__(self,a):
         """
@@ -294,15 +294,10 @@ class Matriz:
         return triangular_inf
     
     def es_triangular_sup(self):
-        triangular_sup = False
-        if self.traspuesta().es_triangular_inf():
-                triangular_sup = True
-        return triangular_sup
+        return self.traspuesta().es_triangular_inf()
     
     def es_diagonal(self):
-        if es_triagonal_sup() == es_triagonal_inf() == True:
-            diagonal = True
-        return diagonal
+        return es_triagonal_sup() == es_triagonal_inf()
                               
     def es_fila(self): 
         return self.filas == 1
@@ -311,8 +306,7 @@ class Matriz:
         return self.columnas == 1
     
     def es_simetrica(self):
-        if self.traspuesta() == self: simetrica = True
-        return simetrica
+        return self.traspuesta() == self
    
     def tipo(self):
         if self.es_cuadrada(): print('Es cuadrdada.')
