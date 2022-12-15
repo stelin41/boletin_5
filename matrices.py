@@ -181,7 +181,7 @@ class Matriz:
         """
         desplazamiento = 0
         if len(args) != 0:
-            desplazamiento = args
+            desplazamiento = args[0]
 
         elementos_diagonal = []
         if desplazamiento < 0:
@@ -387,7 +387,8 @@ if __name__ == "__main__":
     print(otramatriz.columna(1))
     
     # 5.c Obtención de la diagonal de la matriz
-    print(otramatriz.diagonal_principal())
+    print(otramatriz)
+    print(otramatriz.diagonal_principal(-1))
 
     # 6. Obtención de las dimensiones de la matriz
     print(otramatriz.dimension())
