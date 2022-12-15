@@ -175,13 +175,34 @@ class Matriz:
         except ValueError:
             return "La fila y la columna especificada debe ser un número entero mayor que 0"
         
-    def diagonal(self, desplazamiento=0):
+    def diagonal_principal(self, *args):
         """
         Devuelve los elementos de la diagonal de la matriz.
         """
+        desplazamiento = args[0]
         elementos_diagonal = []
         for i in range(1, min([self.filas, self.columnas])+1):
-            elementos_diagonal.append(self[i][i])
+            if desplazamiento < 0:
+                f = i - desplazamiento
+                c = i
+            else:
+                desplazamiento
+            elementos_diagonal.append(self[f][c])
+        return elementos_diagonal
+    
+    def diagonal_opuesta(self, *args):
+        """
+        Devuelve los elementos de la diagonal de la matriz.
+        """
+        desplazamiento = args[0]
+        elementos_diagonal = []
+        for i in range(1, min([self.filas, self.columnas])+1):
+            if desplazamiento < 0:
+                f = i - desplazamiento
+                c = i
+            else:
+                desplazamiento
+            elementos_diagonal.append(self[f][c])
         return elementos_diagonal
     
     def columna(self, columna):
@@ -297,7 +318,7 @@ class Matriz:
         return self.traspuesta().es_triangular_inf()
     
     def es_diagonal(self):
-        return es_triagonal_sup() == es_triagonal_inf()
+        return self.es_triagonal_sup() == self.es_triagonal_inf()
                               
     def es_fila(self): 
         return self.filas == 1
@@ -345,7 +366,7 @@ if __name__ == "__main__":
     print(mimatriz[1])
 
     # 5.b Obtención de una columna de la matriz
-    print(otramatriz.columna(1), 'lol')
+    print(otramatriz.columna(1))
     
     # 5.c Obtención de la diagonal de la matriz
     print(otramatriz.diagonal())
