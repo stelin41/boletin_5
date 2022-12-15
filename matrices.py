@@ -439,6 +439,7 @@ if __name__ == "__main__":
 
     # 5.a Obtención de una fila de la matriz
     print(mimatriz[1])
+    print(mimatriz.fila(1))
 
     # 5.b Obtención de una columna de la matriz
     print(otramatriz.columna(1))
