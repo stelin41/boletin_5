@@ -17,7 +17,7 @@ class Matriz:
             Matriz(filas, columnas) # filas y columnas son enteros mayores que 0
             Matriz(filas, columnas, tipo_matriz='nula')
             Matriz(filas, columnas, tipo_matriz='identidad')
-            Matriz(contenido_matriz) # contenido_matriz de tipo lisa
+            Matriz(contenido_matriz) # contenido_matriz es de tipo lisa
         """
         self.contenido_matriz = []
         # Esto es para el caso donde se define la matriz y su contenido
