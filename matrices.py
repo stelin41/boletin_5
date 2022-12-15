@@ -179,15 +179,22 @@ class Matriz:
         """
         Devuelve los elementos de la diagonal de la matriz.
         """
-        desplazamiento = args[0]
+        desplazamiento = 0
+        if len(args) != 0:
+            desplazamiento = args
+
         elementos_diagonal = []
-        for i in range(1, min([self.filas, self.columnas])+1):
-            if desplazamiento < 0:
-                f = i - desplazamiento
-                c = i
-            else:
-                desplazamiento
-            elementos_diagonal.append(self[f][c])
+        if desplazamiento < 0:
+            for j in range(1, min([self.filas+desplazamiento, self.columnas])+1):
+                i = j - desplazamiento
+                elementos_diagonal.append(self[i][j])
+
+        else:
+            for i in range(1, min([self.filas, self.columnas-desplazamiento])+1):
+                j = i + desplazamiento
+                print(i,j,desplazamiento,'test')
+                elementos_diagonal.append(self[i][j])
+
         return elementos_diagonal
     
     def diagonal_opuesta(self, *args):
