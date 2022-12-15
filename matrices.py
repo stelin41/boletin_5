@@ -202,7 +202,7 @@ class Matriz:
         Devuelve los elementos de la diagonal de la matriz.
         """
         l= []
-        for i in range (1,self.columnas)
+        for i in range (1,self.columnas):
             l.append(self[i][self.columnas+1-i])
         return l
     
