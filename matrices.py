@@ -212,6 +212,9 @@ class Matriz:
             col.append(self[i][columna])
         return Matriz(col)
 
+    def fila(self, fila):
+        return self[fila]
+
     def pide_matriz(self):
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
@@ -306,6 +309,7 @@ class Matriz:
     def es_cuadrada(self):
         return self.columnas == self.filas
     
+
     def es_triangular_inf(self):
         triangular_inf = True
         if not self.es_cuadrada: triangular_inf = False
@@ -315,21 +319,27 @@ class Matriz:
                     triangular_inf = False
         return triangular_inf
     
+
     def es_triangular_sup(self):
         return self.traspuesta().es_triangular_inf()
     
+
     def es_diagonal(self):
         return self.es_triangular_sup() == self.es_triangular_inf()
-                              
+    
+
     def es_fila(self): 
         return self.filas == 1
     
+
     def es_columna(self):
         return self.columnas == 1
     
+
     def es_simetrica(self):
         return self.traspuesta() == self
    
+
     def tipo(self):
         if self.es_cuadrada(): print('Es cuadrdada.')
         if self.es_triangular_inf() : print('Es triangular inferior.')
@@ -339,6 +349,7 @@ class Matriz:
         if self.es_columna() : print('Es una matriz columna.')  
         if self.es_simetrica() : print('Es una matriz simétrica.')  
             
+
     def _suma_lista(self,lista):
         a = 0
         for i in range (len(lista)):
@@ -346,16 +357,16 @@ class Matriz:
         return a    
 
 
-        def es_magica(self):
-        
-            def _suma_lista(lista):
-                s = 0
-                lista = lista.contenido_matriz
-                for i in range (len(lista)):
-                    s += lista[i]
-                return s 
+    def es_magica(self):
     
-        
+        def _suma_lista(lista):
+            s = 0
+            lista = lista.contenido_matriz
+            for i in range (len(lista)):
+                s += lista[i]
+            return s 
+
+    
         magica = False
         if self.es_cuadrada():
             a = _suma_lista(self.columna(1))
@@ -365,7 +376,7 @@ class Matriz:
                 if _suma_lista(self.columna(i)) != a or _suma_lista(self[i]) != a:
                     magica = False
         return magica  
-            
+                
           
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para 
