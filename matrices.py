@@ -442,6 +442,7 @@ if __name__ == "__main__":
     print(mimatriz.fila(1))
 
     # 5.b Obtención de una columna de la matriz
+    print(otramatriz.traspuesta()[1])
     print(otramatriz.columna(1))
     
     # 5.c Obtención de la diagonal de la matriz
