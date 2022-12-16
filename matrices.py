@@ -118,12 +118,12 @@ class Matriz:
 
         imprimir = ""
         if self.filas == 1:
-            imprimir = str(self.contenido_matriz)+"\n"
+            imprimir = str(self.contenido_matriz)
 
         else:
             for i in range(1, self.filas+1):
-                imprimir += str(self[i])
-
+                imprimir += str(self[i])+"\n"
+            imprimir = imprimir[:-1] # Se quita el último salto de línea (porque sobra)
         return imprimir
         
     
@@ -132,7 +132,7 @@ class Matriz:
         Suma de matrices.
         """
         matriz_res=Matriz(self.filas,self.columnas)
-        if self.dimension != matriz.dimension:
+        if self.dimension() != matriz.dimension():
             print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
         else: 
             for i in range (1,self.filas+1):
@@ -146,7 +146,7 @@ class Matriz:
         Resta de matrices.
         """
         matriz_res=Matriz(self.filas,self.columnas)
-        if self.dimension != matriz.dimension:
+        if self.dimension() != matriz.dimension():
             print ("Las matriz no tienen la misma dimensión y por tanto la resta no está definida")
         else: 
             for i in range (1,self.filas+1):
@@ -227,7 +227,7 @@ class Matriz:
                 
                 imprimir += a + str(self[i][j]) + " "*espaciado + b
             imprimir += "\n"
-
+        imprimir = imprimir[:-1] # Se quita el último salto de línea (porque sobra)
         print(imprimir)
         
 
@@ -436,7 +436,7 @@ if __name__ == "__main__":
     # 2.a Asignación de un elemento.
     otramatriz[1][1] = 1337
 
-    # 2.b Obtención de un elemneto.
+    # 2.b Obtención de un elemento.
     print(otramatriz[1][1])
 
     # 3. Presentación de una matriz.
