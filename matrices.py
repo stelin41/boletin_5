@@ -178,7 +178,7 @@ class Matriz:
         return matriz_producto
 
 
-    def print(self):
+    def imprime(self):
         """
         Presentación del estado actual de la matriz de forma visualmente agradable.
         """
@@ -390,7 +390,7 @@ class Matriz:
         return self.traspuesta() == self
    
 
-    def tipo(self):
+    def imprime_tipo(self):
         if self.es_cuadrada(): print('Es cuadrada.')
         if self.es_triangular_inf() : print('Es triangular inferior.')
         if self.es_triangular_sup() : print('Es triangular superior.')
@@ -440,7 +440,7 @@ if __name__ == "__main__":
     print(otramatriz[1][1])
 
     # 3. Presentación de una matriz.
-    otramatriz.print() 
+    otramatriz.imprime() 
     print(otramatriz)
 
     # 4. Obtención de una matriz por teclado.
@@ -487,7 +487,7 @@ if __name__ == "__main__":
     print(otramatriz.traspuesta())
 
     # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior.
-    In3.tipo()
+    In3.imprime_tipo()
     print(In3.es_fila())
     print(In3.es_columna())
     print(In3.es_triangular_inf())
