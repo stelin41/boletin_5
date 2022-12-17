@@ -77,7 +77,7 @@ class Matriz:
                     self.contenido_matriz.append(fila)
 
         else:
-            raise Exception('Hay que especificar las dimensiones de la matriz o su contenido.')
+            raise Exception('Matriz declarada de forma incorrecta. Para más información haz uso de help(Matriz)')
 
 
     def __getitem__(self, elemento):
@@ -232,10 +232,16 @@ class Matriz:
         
 
     def fila(self, fila):
+        """
+        Devuelve la fila especificada.
+        """
         return self[fila]
 
 
     def columna(self, columna):
+        """
+        Devuelve la columna especificada.
+        """
         col = []
         for i in range(1,self.filas+1):
             col.append(self[i][columna])
@@ -243,6 +249,9 @@ class Matriz:
 
 
     def dimension(self):
+        """
+        Devuelve una tupla con la siguiente estructura: (filas, columnas).
+        """
         return self.filas, self.columnas
 
 
@@ -279,6 +288,9 @@ class Matriz:
           
         
     def traspuesta(self):
+        """
+        Devuelve la matriz traspuesta.
+        """
         matriztras=Matriz(self.columnas,self.filas)
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
@@ -287,16 +299,26 @@ class Matriz:
     
     
     def opuesta(self):
+        """
+        Devuelve la matriz opuesta, asumiendo que esta se define por -A.
+        """
         return self*(-1)
 
     
     def pide_matriz(self):
+        """
+        Pide al usuario una matriz por teclado.
+        """
+
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
                 self[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: "))
 
 
     def media(self):
+        """
+        Devuelve la media de los valores de los elementos de la matriz.
+        """
         lista=self.lista_elementos()
         a=0
         for i in lista:
@@ -306,16 +328,26 @@ class Matriz:
 
 
     def mayor(self):
+        """
+        Devuelve el valor del elemento más grande de la matriz
+        """
         lista=self.lista_elementos()
         return max(lista)
 
 
     def menor(self):
+        """
+        Devuelve el valor del elemento más pequeño de la matriz
+        """
+
         lista=self.lista_elementos()
         return min(lista)
 
         
     def lista_elementos(self):
+        """
+        Devuelve todos los elementos de la matriz en forma de lista unidimensional.
+        """
         l=[]
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
@@ -324,6 +356,10 @@ class Matriz:
 
     
     def guardar(self, archivo, matrices):
+        """
+        Guarda una lista de matrices en un archivo.
+        """
+
         contenido = ""
         for matriz in matrices:
             for i in range(1, matriz.filas+1):
@@ -338,6 +374,10 @@ class Matriz:
 
 
     def cargar(self, archivo):
+        """
+        Carga una lista de matrices almacenadas en un archivo con el método guardar,
+        y devuelve una lista con todas las matrices.
+        """
         archivo = open(archivo, 'r')
         contenido = archivo.read()
         archivo.close()
@@ -391,6 +431,9 @@ class Matriz:
    
 
     def imprime_tipo(self):
+        """
+        Imprime en pantalla las características de la matriz.
+        """
         if self.es_cuadrada(): print('Es cuadrada.')
         if self.es_triangular_inf() : print('Es triangular inferior.')
         if self.es_triangular_sup() : print('Es triangular superior.')
@@ -511,9 +554,10 @@ if __name__ == "__main__":
                                                 
 
     # Guardar la matriz en un archivo
-    Matriz().guardar('matrices.csv', [otramatriz, matriz2])
+    Matriz().guardar('matrices.matrix', [otramatriz, matriz2])
 
     # Cargar la matriz desde un archivo             
-    A, B = Matriz().cargar('matrices.csv')
+    A, B = Matriz().cargar('matrices.matrix')
     print(A)
     print(B)
+    help(Matriz)
