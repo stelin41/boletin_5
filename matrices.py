@@ -303,14 +303,15 @@ class Matriz:
         return elementos_diagonal
     
     
-    def diagonal_opuesta(self):
+    def diagonal_secundaria(self):
         """
         Devuelve los elementos de la diagonal de la matriz.
         """
 
-        l= []
-        for i in range (1,self.columnas+1):
-            l.append(self[i][self.columnas+1-i])
+        l = []
+        tamanho_diagonal = min([self.filas, self.columnas])
+        for i in range (1,tamanho_diagonal+1):
+            l.append(self[i][tamanho_diagonal+1-i])
         return l
           
         
@@ -521,7 +522,7 @@ class Matriz:
         magica = False
         if self.es_cuadrada():
             a = _suma_lista(self.columna(1))
-            if _suma_lista(self.diagonal_principal()) == _suma_lista(self.diagonal_opuesta()) == a:
+            if _suma_lista(self.diagonal_principal()) == _suma_lista(self.diagonal_secundaria()) == a:
                 magica = True
             for i in range (1,self.columnas+1):
                 if _suma_lista(self.columna(i)) != a or _suma_lista(self[i]) != a:
@@ -536,6 +537,7 @@ if __name__ == "__main__":
 
     otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
     matriz2 = Matriz([[5,6,7,8],[9,10,11,12],[1,2,3,4]])
+    
 
     # 1. Definición de una matriz a partir de sus dimensiones.
     mimatriz = Matriz(2,3)
@@ -562,10 +564,11 @@ if __name__ == "__main__":
     print(otramatriz.columna(1))
     
     # 5.c Obtención de la diagonal de la matriz.
-    print(otramatriz.diagonal_principal())
-    #print(otramatriz.diagonal_opuesta()) # No funciona D:
-    print(otramatriz.diagonal_principal(2)) # El 2 indica que es la diagonal que empieza en la columna 3
-    print(otramatriz.diagonal_principal(-1)) # El -1 indica que es la diagonal que empieza en la fila 2
+    matriz_cuadrada = Matriz([[5,3,7],[9,1,2],[3,6,4]])
+    print(matriz_cuadrada.diagonal_principal())
+    print(matriz_cuadrada.diagonal_secundaria())
+    print(matriz_cuadrada.diagonal_principal(2)) # El 2 indica que es la diagonal que empieza en la columna 3
+    print(matriz_cuadrada.diagonal_principal(-1)) # El -1 indica que es la diagonal que empieza en la fila 2
 
     # 6. Obtención de las dimensiones de la matriz.
     print(otramatriz.dimension())
