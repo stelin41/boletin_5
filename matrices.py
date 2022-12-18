@@ -10,7 +10,7 @@ Propósito:
 
 class Matriz:
 
-    def __init__(self, *args, tipo_matriz='normal'):
+    def __init__(self, *args, tipo_matriz='vacia'):
         """
         Declaración de una matriz.
         Puede declararse una matriz de las siguientes formas:
@@ -21,40 +21,54 @@ class Matriz:
         """
         self.contenido_matriz = []
 
+        # Para facilitar las operaciones, las matrices compuestas por más de una fila almacenarán
+        # una matriz fila en cada fila en vez de una simple lista. Gracias a eso se pueden hacer
+        # operaciones del tipo matriz[1] + matriz[2]
+
         # En el caso donde se define la matriz especificar las dimensiones ni el conenido.
         # Este tipo de matrices se usan solo para poder acceder a los métodos de guardado y carga.
         if len(args) == 0:
             self.filas = 0
             self.columnas = 0
         
-        # En el caso donde se define la matriz y su contenido.
+        # En el caso donde se define una matriz por contenido, o se define una matriz cuadrada.
         elif len(args) == 1:
-            contenido = args[0]
-            # En caso de que sea una matriz fila.
-            if type(contenido[0]) != list:
-                self.filas = 1
-                self.contenido_matriz = contenido
-                self.columnas = len(contenido)
 
+            # En el caso donde se define una matriz cuadrada pero sin indicar el contenido.
+            if type(args[0]) == int:
+                self = self.__init__(args[0], args[0], tipo_matriz=tipo_matriz)
+
+            # En el caso donde se define una matriz por su contenido
+            elif type(args[0]) in [list, tuple]:
+                contenido = args[0]
+
+                # En caso de que sea una matriz fila.
+                if type(contenido[0]) not in [list, tuple]:
+                    self.filas = 1
+                    self.contenido_matriz = contenido
+                    self.columnas = len(contenido)
+
+                else:
+                    self.filas = len(contenido)
+                    self.columnas = len(contenido[0])
+
+                    for fila in contenido:
+                        # Primero se comprueba que las dimensiones son válidas.
+                        if len(fila) != self.columnas:
+                            raise IndexError("Todas las filas de la matriz deben tener el mismo número de elementos.")
+
+                        self.contenido_matriz.append(Matriz(fila))
             else:
-                self.filas = len(contenido)
-                self.columnas = len(contenido[0])
+                raise TypeError('Matriz declarada de forma incorrecta. Para más información haz uso de help(Matriz).')
 
-                for fila in contenido:
-                    # Primero se comprueba que las dimensiones son válidas.
-                    if len(fila)!=self.columnas:
-                        raise Exception("Todas las filas de la matriz deben tener el mismo número de elementos.")
-
-                    self.contenido_matriz.append(Matriz(fila))
-
-        # En el caso donde solo se define la matriz pero no su contenido.
+        # En el caso donde solo se define las dimensiones de la matriz y su tipo.
         elif len(args) == 2:
             self.filas = args[0]
             self.columnas = args[1]
 
             if tipo_matriz == 'identidad':
                 if self.columnas != self.filas:
-                    raise Exception('La matriz identidad debe ser cuadrada.')
+                    raise TypeError('La matriz identidad debe ser cuadrada.')
 
                 for j in range(1,self.filas+1):
                     fila = Matriz([0] * self.columnas)
@@ -62,12 +76,12 @@ class Matriz:
                     self.contenido_matriz.append(fila)
                 
             else:
-                if tipo_matriz == 'normal':
+                if tipo_matriz == 'vacia':
                     contenido = None
                 elif tipo_matriz == 'nula':
                     contenido = 0
                 else:
-                    raise Exception(f'No se soporta una matriz de tipo {tipo_matriz}.')
+                    raise TypeError(f'No se soporta una matriz de tipo {tipo_matriz}.')
                     
                 # Se hace de este modo para evitar que se guarden referencias a la misma
                 # dirección de memoria y que a la hora de modificar la matriz se
@@ -77,14 +91,14 @@ class Matriz:
                     self.contenido_matriz.append(fila)
 
         else:
-            raise Exception('Matriz declarada de forma incorrecta. Para más información haz uso de help(Matriz)')
+            raise TypeError('Matriz declarada de forma incorrecta. Para más información haz uso de help(Matriz).')
 
 
     def __getitem__(self, elemento):
         """
         Devuelve el elemento especificado.
         """
-        #print(type(elemento))
+        
         try:
             if type(elemento) == int:
                 if elemento<1:
@@ -94,13 +108,14 @@ class Matriz:
                 raise ValueError
 
         except ValueError:
-            raise "La fila y la columna especificada debe ser un número entero mayor que 0"
+            raise IndexError("La fila y la columna especificada debe ser un número entero mayor que 0.")
 
 
     def __setitem__(self, elemento, valor):
         """
         Modifica el elemento especificado.
         """
+
         try:
             elemento = int(elemento)
             if elemento<1:
@@ -108,7 +123,8 @@ class Matriz:
             self.contenido_matriz[elemento-1] = valor
 
         except ValueError:
-            return "La fila y la columna especificada debe ser un número entero mayor que 0"
+            # Se intercepta el error y se vuelve a lanzar con el propósito de dar una descripción más detallada del problema.
+            raise ValueError("La fila y la columna especificada deben ser un número entero mayor que 0.")
 
 
     def __str__(self):
@@ -123,7 +139,9 @@ class Matriz:
         else:
             for i in range(1, self.filas+1):
                 imprimir += str(self[i])+"\n"
-            imprimir = imprimir[:-1] # Se quita el último salto de línea (porque sobra)
+
+            # Se quita el último salto de línea (porque sobra)
+            imprimir = imprimir[:-1] 
         return imprimir
         
     
@@ -131,6 +149,7 @@ class Matriz:
         """
         Suma de matrices.
         """
+
         matriz_res=Matriz(self.filas,self.columnas)
         if self.dimension() != matriz.dimension():
             print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
@@ -145,6 +164,7 @@ class Matriz:
         """
         Resta de matrices.
         """
+
         matriz_res=Matriz(self.filas,self.columnas)
         if self.dimension() != matriz.dimension():
             print ("Las matriz no tienen la misma dimensión y por tanto la resta no está definida")
@@ -158,8 +178,8 @@ class Matriz:
     def __mul__(self,a):
         """
         Multiplicación entre matrices o entre una matriz y un escalar.
-        B=𝛼A o B=A'*A
         """
+
         if type(a)==float or type(a)==int:
             matriz_producto=Matriz(self.filas,self.columnas)
             for i in range (1,self.filas+1):
@@ -185,8 +205,8 @@ class Matriz:
 
         imprimir = ""
 
-        # Se busca los valores con más caracteres de cada columna, para así
-        # decidir el número de espacios en blanco que los separa.
+        # Se busca los valores con más caracteres de cada columna, para así decidir el número
+        # de espacios en blanco que los separa.
         longitud_maxima = []
         for j in range(1,self.columnas+1):
             valores = []
@@ -197,10 +217,9 @@ class Matriz:
 
         for i in range(1,self.filas+1):
             for j in range(1,self.columnas+1):
-                # Se mide la diferencia entre el elemento con más caracteres de
-                # la columna y el actual. Esa diferencia +1 es el número de
-                # espacios que aparecen después del elemento para que esté
-                # correctamente presentado.
+                # Se mide la diferencia entre el elemento con más caracteres de la columna y el actual.
+                # Esa diferencia +1 es el número de espacios que aparecen después del elemento para
+                # que esté correctamente presentado.
                 longitud_elemento_actual = len(str(self[i][j]))
                 espaciado = longitud_maxima[j-1]-longitud_elemento_actual+1
                 a = b = ''
@@ -215,7 +234,6 @@ class Matriz:
                         a = "| " 
 
                 elif j==self.columnas:
-
                     if i==1:
                         b= "\\"
 
@@ -227,7 +245,9 @@ class Matriz:
                 
                 imprimir += a + str(self[i][j]) + " "*espaciado + b
             imprimir += "\n"
-        imprimir = imprimir[:-1] # Se quita el último salto de línea (porque sobra)
+
+        # Se quita el último salto de línea (porque sobra)
+        imprimir = imprimir[:-1]
         print(imprimir)
         
 
@@ -235,6 +255,7 @@ class Matriz:
         """
         Devuelve la fila especificada.
         """
+
         return self[fila]
 
 
@@ -242,6 +263,7 @@ class Matriz:
         """
         Devuelve la columna especificada.
         """
+
         col = []
         for i in range(1,self.filas+1):
             col.append(self[i][columna])
@@ -252,13 +274,17 @@ class Matriz:
         """
         Devuelve una tupla con la siguiente estructura: (filas, columnas).
         """
+
         return self.filas, self.columnas
 
 
     def diagonal_principal(self, *args):
         """
         Devuelve los elementos de la diagonal de la matriz.
+        También se puede obtener una diagonal diferente al indicar el desplazamiento de esta.
+        Ejemplo: matriz.diagonal_principal(1)
         """
+
         desplazamiento = 0
         if len(args) != 0:
             desplazamiento = args[0]
@@ -277,10 +303,11 @@ class Matriz:
         return elementos_diagonal
     
     
-    def diagonal_opuesta(self, *args):
+    def diagonal_opuesta(self):
         """
         Devuelve los elementos de la diagonal de la matriz.
         """
+
         l= []
         for i in range (1,self.columnas+1):
             l.append(self[i][self.columnas+1-i])
@@ -291,6 +318,7 @@ class Matriz:
         """
         Devuelve la matriz traspuesta.
         """
+
         matriztras=Matriz(self.columnas,self.filas)
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
@@ -302,6 +330,7 @@ class Matriz:
         """
         Devuelve la matriz opuesta, asumiendo que esta se define por -A.
         """
+
         return self*(-1)
 
     
@@ -319,6 +348,7 @@ class Matriz:
         """
         Devuelve la media de los valores de los elementos de la matriz.
         """
+
         lista=self.lista_elementos()
         a=0
         for i in lista:
@@ -331,6 +361,7 @@ class Matriz:
         """
         Devuelve el valor del elemento más grande de la matriz
         """
+
         lista=self.lista_elementos()
         return max(lista)
 
@@ -348,6 +379,7 @@ class Matriz:
         """
         Devuelve todos los elementos de la matriz en forma de lista unidimensional.
         """
+
         l=[]
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
@@ -378,6 +410,7 @@ class Matriz:
         Carga una lista de matrices almacenadas en un archivo con el método guardar,
         y devuelve una lista con todas las matrices.
         """
+
         archivo = open(archivo, 'r')
         contenido = archivo.read()
         archivo.close()
@@ -397,10 +430,18 @@ class Matriz:
     
 
     def es_cuadrada(self):
+        """
+        Devuelve un booleano que indica si la matriz es cuadrada o no.
+        """
+
         return self.columnas == self.filas
     
 
     def es_triangular_inf(self):
+        """
+        Devuelve un booleano que indica si la matriz es triangular inferior o no.
+        """
+
         triangular_inf = True
         if not self.es_cuadrada: triangular_inf = False
         for i in range (1,self.filas+1):
@@ -411,22 +452,42 @@ class Matriz:
     
 
     def es_triangular_sup(self):
+        """
+        Devuelve un booleano que indica si la matriz es triangular superior o no.
+        """
+
         return self.traspuesta().es_triangular_inf()
     
 
     def es_diagonal(self):
+        """
+        Devuelve un booleano que indica si la matriz es diagonal o no.
+        """
+
         return self.es_triangular_sup() == self.es_triangular_inf()
     
 
-    def es_fila(self): 
+    def es_fila(self):
+        """
+        Devuelve un booleano que indica si la matriz es una fila o no.
+        """
+
         return self.filas == 1
     
 
     def es_columna(self):
+        """
+        Devuelve un booleano que indica si la matriz es una columna o no.
+        """
+
         return self.columnas == 1
     
 
     def es_simetrica(self):
+        """
+        Devuelve un booleano que indica si la matriz es simétrica o no.
+        """
+
         return self.traspuesta() == self
    
 
@@ -434,17 +495,20 @@ class Matriz:
         """
         Imprime en pantalla las características de la matriz.
         """
+
         if self.es_cuadrada(): print('Es cuadrada.')
-        if self.es_triangular_inf() : print('Es triangular inferior.')
-        if self.es_triangular_sup() : print('Es triangular superior.')
-        if self.es_diagonal() : print('Es diagonal.')
         if self.es_fila() : print('Es una matriz fila.')
-        if self.es_columna() : print('Es una matriz columna.')  
-        if self.es_simetrica() : print('Es una matriz simétrica.')  
+        if self.es_columna() : print('Es una matriz columna.')
+        if self.es_simetrica() : print('Es una matriz simétrica.')
+        if self.es_triangular_sup() : print('Es triangular superior.')
+        if self.es_triangular_inf() : print('Es triangular inferior.')
 
 
     def es_magica(self):
-    
+        """
+        Devuelve un booleano que indica si la matriz es mágica o no.
+        """
+
         def _suma_lista(lista):
             s = 0
             if type(lista) == Matriz:
@@ -499,6 +563,7 @@ if __name__ == "__main__":
     
     # 5.c Obtención de la diagonal de la matriz.
     print(otramatriz.diagonal_principal())
+    #print(otramatriz.diagonal_opuesta()) # No funciona D:
     print(otramatriz.diagonal_principal(2)) # El 2 indica que es la diagonal que empieza en la columna 3
     print(otramatriz.diagonal_principal(-1)) # El -1 indica que es la diagonal que empieza en la fila 2
 
@@ -531,12 +596,12 @@ if __name__ == "__main__":
 
     # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior.
     In3.imprime_tipo()
+    print(In3.es_cuadrada())
     print(In3.es_fila())
     print(In3.es_columna())
-    print(In3.es_triangular_inf())
-    print(In3.es_triangular_sup())
-    print(In3.es_cuadrada())
     print(In3.es_simetrica())
+    print(In3.es_triangular_sup())
+    print(In3.es_triangular_inf())
     
     # 14. Matriz mágica.
     print(otramatriz.es_magica())
@@ -560,4 +625,3 @@ if __name__ == "__main__":
     A, B = Matriz().cargar('matrices.matrix')
     print(A)
     print(B)
-    help(Matriz)
