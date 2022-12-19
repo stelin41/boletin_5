@@ -29,10 +29,6 @@ def si_o_no(respuesta_por_defecto):
             print("Error: Respuesta no reconocida. Debes introducir \"Sí\" o \"No\"")
 
 
-def bienvenida():
-    print("Herramienta para realizar cálculos con matrices.")
-
-
 def carga_estado():
     archivo_cargado = False
     lista_matrices = []
@@ -72,7 +68,8 @@ def pide_operacion():
 def main():
     matrices = []
 
-    bienvenida()
+    print("Herramienta para realizar cálculos con matrices.")
+    print("")
     print("¿Deseas cargar el estado previo de las matrices?")
     if si_o_no(False):
         matrices = carga_estado()
