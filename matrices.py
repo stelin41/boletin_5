@@ -592,7 +592,7 @@ if __name__ == "__main__":
     print(Matriz(3,2,tipo_matriz='nula'))
 
     # 11.b Matriz identidad a partir de las dimensiones dadas.
-    In3 = Matriz(3,3,tipo_matriz='identidad')
+    In3 = Matriz(3,tipo_matriz='identidad')
 
     # 12. Matriz traspuesta.
     print(otramatriz.traspuesta())
