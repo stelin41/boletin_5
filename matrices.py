@@ -237,7 +237,7 @@ class Matriz:
                         else:
                             a = "| " 
 
-                    elif j==self.columnas:
+                    if j==self.columnas:
                         if i==1:
                             b= "\\"
 
@@ -543,7 +543,6 @@ if __name__ == "__main__":
 
     otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
     matriz2 = Matriz([[5,6,7,8],[9,10,11,12],[1,2,3,4]])
-    Matriz([1,2,3,4]).imprime()
 
     # 1. Definición de una matriz a partir de sus dimensiones.
     mimatriz = Matriz(2,3)
