@@ -585,7 +585,7 @@ if __name__ == "__main__":
     # 7.b Resta de matrices.
     print(otramatriz-matriz2)
 
-    # 8. Matriz opuesta (Preguntar si -A es correcto).
+    # 8. Matriz opuesta.
     print(otramatriz.opuesta())
 
     # 9. Producto de matrices.

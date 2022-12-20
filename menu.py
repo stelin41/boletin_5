@@ -117,24 +117,90 @@ def nuevo_nombre(ultimo_nombre):
         return nuevo_nombre
 
 
-"""
-def calculadora():
+def haz_operacion(*args):
+    """
+    Realiza una única operación.
+    Los primeros parámetros indican los datos a operar.
+    El último parámetro es un strings con el nombre de la operación a realizar (+, -, *, T, In, Nn, max, min, med).
+    Entradas soportadas:
+    (Matriz, Matriz, "+")
+    (Matriz, Matriz, "-")
+    (Matriz, "+")
+    (Matriz, "-")
+    (Matriz, Matriz, "*")
+    (Matriz, float/int, "*")
+    (float/int, Matriz, "*")
+    (Matriz, "T")
+    (int, "In")
+    (int, "Nn")
+    (Matriz, "max")
+    (Matriz, "min")
+    (Matriz, "med")
+    """
+
+    if len(args) not in [2, 3]:
+        raise Exception("Operación no soportada.")
+
+    if len(args) == 2:
+        pass
+    elif len(args) == 3:
+        pass
+        
+
+def calcula(matrices):
     print()
     print("Calculadora iniciada.")
-    print("Escribe h para obtener ayuda.")
+    print("Usa 'h' para obtener ayuda.")
 
     opcion = 0
     while True:
         operacion = input(">> ")
         try:
-            if operacion == "h":
-                print()
-            elif operacion == ""
-            
+            if operacion == "":
+                continue
+            elif operacion == "h":
+                print("Lista de posibles operaciones:")
+                print("'h' para mostrar este texto.")
+                print("'q' para salir de la calculadora y volver al menú.")
+                print("'l' para mostrar todas las matrices y su estado.")
+                print("'l A', siendo 'A' el nombre de la matriz, para mostrar el estado de la matriz.")
+                print("'d A' para imprimir las dimensiones de la matriz A")
+                print("'c A' para imprimir las características de la matriz A")
+                print("'A + B', siendo 'A' y 'B' matrices con las mismas dimensiones.")
+                print("'A - B', siendo 'A' y 'B' matrices con las mismas dimensiones.")
+                print("'A * B', siendo 'A' y 'B' matrices, y teniendo 'A' las mismas columnas que filas tiene 'B'.")
+                print("'A * a' o 'a * A', siendo 'A' una matriz y 'a' un escalar.")
+                print("'T(A)' para obtener la traspuesda de la matriz 'A'")
+                print("'-A' para obtener la matriz opuesta de la matriz 'A'")
+                print("'In3' para obtener la matriz identidad de orden 3")
+                print("'Nn3' para obtener la matriz nula de orden 3")
+                print("'max(A)' para obtener el valor máximo de los elementos")
+                print("'min(A)' para obtener el valor mínimo de los elementos")
+                print("'med(A)' para obtener la media de los valres de los elementos")
+                #print("Todas las operaciones entre matrices se pueden encadenar en una sola instrucción.")
+                #print("Se pueden usar los paréntesis para especificar el orden de las operaciones.")
+                #print("'_ = <operación>' para guardar el resultado de la operación en una nueva matriz.")
+            elif operacion == "q":
+                break
+            elif operacion[0] == "l":
+                if operacion == "l":
+                    listar_matrices(matrices)
+                else:
+                    nombre_matriz = operacion.split(" ")[1]
+                    listar_matrices({nombre_matriz:matrices[nombre_matriz]})
+            elif operacion[0] == "d":
+                nombre_matriz = operacion.split(" ")[1]
+                print("Filas, columnas:",matrices[nombre_matriz].dimensiones())
+            #elif operacion[0] == "c":
+            else:
+                operacion = operacion.replace(" ", "")
+
+                
+                    
         except:
-            print("Error: Operación no válida. Usa h para obtener ayuda.")
+            print("Error: Operación no válida. Usa 'h' para obtener ayuda.")
             print()
-"""
+
 
 
 def pide_operacion_menu():
@@ -143,21 +209,22 @@ def pide_operacion_menu():
         print()
         print("Lista de posibles acciones:")
         print("(1) Definir matriz")
-        print("(2) Listar matrices creadas")
-        print("(3) Modificar contenido de una matriz")
-        print("(4) Iniciar calculadora")
-        print("(5) Guardar estado de las matrices")
-        print("(6) Salir")
-        opcion = input("[1-6]: ")
+        print("(2) Eliminar matriz")
+        print("(3) Listar matrices")
+        print("(4) Modificar contenido de una matriz")
+        print("(5) Iniciar calculadora")
+        print("(6) Guardar estado de las matrices")
+        print("(7) Salir")
+        opcion = input("[1-7]: ")
         try:
             opcion = int(opcion)
-            if opcion not in range(1,7):
+            if opcion not in range(1,8):
                 raise Exception()
             
             return opcion
             
         except:
-            print("Debes introducir un número del 1 al 6 (incluidos). Por favor, inténtalo de nuevo.")
+            print("Debes introducir un número del 1 al 7 (incluidos). Por favor, inténtalo de nuevo.")
 
 
 def main():
@@ -183,20 +250,24 @@ def main():
             matrices[nombre_inventado] = nueva_matriz
             print(f"Matriz \"{nombre_inventado}\" creada con éxito.")
 
-        # Mostrar todas las matrices y su contenido
+        # Eliminar una matriz
         elif operacion == 2:
+            print("a")
+
+        # Mostrar todas las matrices y su contenido
+        elif operacion == 3:
             listar_matrices(matrices)
 
         # Modificar contenido de una matriz
-        elif operacion == 3:
+        elif operacion == 4:
             print("c")
 
         # Iniciar calculadora
-        elif operacion == 4:
-            print("d")
+        elif operacion == 5:
+            calcula(matrices)
 
         # Guardar estado de las matrices
-        elif operacion == 5:
+        elif operacion == 6:
             guarda_estado(matrices)
 
         # Salir
@@ -207,3 +278,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+"""
+TODO:
+2.a
+2.b
+5.a
+5.b
+5.c
+14.
+"""
