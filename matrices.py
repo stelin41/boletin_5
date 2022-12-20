@@ -202,53 +202,57 @@ class Matriz:
         """
         Presentación del estado actual de la matriz de forma visualmente agradable.
         """
+        # En caso de que sea una matriz fila
+        if self.filas == 1:
+            print(str(self[1]).replace(",", ""))
 
-        imprimir = ""
+        else:
+            imprimir = ""
 
-        # Se busca los valores con más caracteres de cada columna, para así decidir el número
-        # de espacios en blanco que los separa.
-        longitud_maxima = []
-        for j in range(1,self.columnas+1):
-            valores = []
-            for i in range(1,self.filas+1):
-                valores.append(len(str(self[i][j])))
-
-            longitud_maxima.append(max(valores))
-
-        for i in range(1,self.filas+1):
+            # Se busca los valores con más caracteres de cada columna, para así decidir el número
+            # de espacios en blanco que los separa.
+            longitud_maxima = []
             for j in range(1,self.columnas+1):
-                # Se mide la diferencia entre el elemento con más caracteres de la columna y el actual.
-                # Esa diferencia +1 es el número de espacios que aparecen después del elemento para
-                # que esté correctamente presentado.
-                longitud_elemento_actual = len(str(self[i][j]))
-                espaciado = longitud_maxima[j-1]-longitud_elemento_actual+1
-                a = b = ''
-                if j==1:
-                    if i==1:
-                        a = "/ " 
+                valores = []
+                for i in range(1,self.filas+1):
+                    valores.append(len(str(self[i][j])))
 
-                    elif i==self.filas:
-                        a = "\\ " 
+                longitud_maxima.append(max(valores))
 
-                    else:
-                        a = "| " 
+            for i in range(1,self.filas+1):
+                for j in range(1,self.columnas+1):
+                    # Se mide la diferencia entre el elemento con más caracteres de la columna y el actual.
+                    # Esa diferencia +1 es el número de espacios que aparecen después del elemento para
+                    # que esté correctamente presentado.
+                    longitud_elemento_actual = len(str(self[i][j]))
+                    espaciado = longitud_maxima[j-1]-longitud_elemento_actual+1
+                    a = b = ''
+                    if j==1:
+                        if i==1:
+                            a = "/ " 
 
-                elif j==self.columnas:
-                    if i==1:
-                        b= "\\"
+                        elif i==self.filas:
+                            a = "\\ " 
 
-                    elif i==self.filas:
-                        b= "/"
+                        else:
+                            a = "| " 
 
-                    else:
-                        b= "|"
-                
-                imprimir += a + str(self[i][j]) + " "*espaciado + b
-            imprimir += "\n"
+                    elif j==self.columnas:
+                        if i==1:
+                            b= "\\"
 
-        # Se quita el último salto de línea (porque sobra)
-        imprimir = imprimir[:-1]
-        print(imprimir)
+                        elif i==self.filas:
+                            b= "/"
+
+                        else:
+                            b= "|"
+                    
+                    imprimir += a + str(self[i][j]) + " "*espaciado + b
+                imprimir += "\n"
+
+            # Se quita el último salto de línea (porque sobra)
+            imprimir = imprimir[:-1]
+            print(imprimir)
         
 
     def fila(self, fila):
@@ -425,7 +429,9 @@ class Matriz:
                     matrices.append(Matriz(nueva_matriz))
                 nueva_matriz = []
             else:
-                nueva_matriz.append(linea.split(","))
+                fila = linea.split(",")
+                fila = [float(elemento) for elemento in fila]
+                nueva_matriz.append(fila)
 
         return matrices
     
@@ -537,7 +543,7 @@ if __name__ == "__main__":
 
     otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
     matriz2 = Matriz([[5,6,7,8],[9,10,11,12],[1,2,3,4]])
-    
+    Matriz([1,2,3,4]).imprime()
 
     # 1. Definición de una matriz a partir de sus dimensiones.
     mimatriz = Matriz(2,3)

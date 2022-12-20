@@ -44,10 +44,34 @@ def carga_estado():
     return lista_matrices
 
 
-def guarda_estado():
-    nombre_archivo = input("Introduce el nombre completo del archivo: ")
+def guarda_estado(matrices):
+    nombre_archivo = ""
 
+    while nombre_archivo == "":
+        nombre_archivo = input("Introduce el nombre completo del archivo: ")
+        if nombre_archivo == "":
+            print("Debes introducir un nombre. Por favor, inténtalo de nuevo.")
+    Matriz().guardar(nombre_archivo, list(matrices.values()))
     print("Contenido guardado con éxito.")
+
+
+def pide_matriz():
+    while True:
+        dimensiones = input("Introduce el número de filas y columnas de la matriz, separados por un espacio: ")
+        try:
+            filas, columnas = dimensiones.split(" ")
+            filas = int(filas)
+            columnas = int(columnas)
+            if filas < 1 or columnas < 1:
+                raise Exception()
+
+            nueva_matriz = Matriz(filas, columnas)
+            nueva_matriz.pide_matriz()
+            print("Matriz creada con éxito.")
+            return nueva_matriz
+        except:
+            print("Error. Debes introducir los valores de la forma: <filas> <columnas>")
+            print("Además, deben ser números enteros mayores que 0. Por favor, inténtalo de nuevo.")
 
 
 def listar_matrices(matrices):
@@ -92,20 +116,41 @@ def nuevo_nombre(ultimo_nombre):
 
         return nuevo_nombre
 
-def pide_operacion():
+
+"""
+def calculadora():
     print()
-    print("Lista de posibles acciones:")
-    print("(1) Definir matriz")
-    print("(2) Listar matrices creadas")
-    print("(3) Mostrar contenido de una matriz")
-    print("(4) Iniciar calculadora")
-    print("(5) Guardar estado de las matrices")
-    print("(6) Salir")
+    print("Calculadora iniciada.")
+    print("Escribe h para obtener ayuda.")
 
     opcion = 0
     while True:
+        operacion = input(">> ")
         try:
-            opcion = int(input("[1-6]: "))
+            if operacion == "h":
+                print()
+            elif operacion == ""
+            
+        except:
+            print("Error: Operación no válida. Usa h para obtener ayuda.")
+            print()
+"""
+
+
+def pide_operacion_menu():
+    opcion = 0
+    while True:
+        print()
+        print("Lista de posibles acciones:")
+        print("(1) Definir matriz")
+        print("(2) Listar matrices creadas")
+        print("(3) Modificar contenido de una matriz")
+        print("(4) Iniciar calculadora")
+        print("(5) Guardar estado de las matrices")
+        print("(6) Salir")
+        opcion = input("[1-6]: ")
+        try:
+            opcion = int(opcion)
             if opcion not in range(1,7):
                 raise Exception()
             
@@ -113,15 +158,15 @@ def pide_operacion():
             
         except:
             print("Debes introducir un número del 1 al 6 (incluidos). Por favor, inténtalo de nuevo.")
-            print()
+
 
 def main():
     matrices = {}
     nombre_inventado = ""
 
     print("Herramienta para realizar cálculos con matrices.")
-    print("")
-    print("¿Deseas cargar el estado previo de las matrices?")
+    print()
+    print("¿Deseas cargar un estado previo de las matrices?")
     if si_o_no(False):
         matrices_cargadas = carga_estado()
         for matriz in matrices_cargadas:
@@ -129,18 +174,32 @@ def main():
             matrices[nombre_inventado] = matriz
 
     while True:
-        operacion = pide_operacion()
+        operacion = pide_operacion_menu()
 
+        # Crear nueva matriz
         if operacion == 1:
-            print("a")
+            nueva_matriz = pide_matriz()
+            nombre_inventado = nuevo_nombre(nombre_inventado)
+            matrices[nombre_inventado] = nueva_matriz
+            print(f"Matriz \"{nombre_inventado}\" creada con éxito.")
+
+        # Mostrar todas las matrices y su contenido
         elif operacion == 2:
             listar_matrices(matrices)
+
+        # Modificar contenido de una matriz
         elif operacion == 3:
             print("c")
+
+        # Iniciar calculadora
         elif operacion == 4:
             print("d")
+
+        # Guardar estado de las matrices
         elif operacion == 5:
-            print("e")
+            guarda_estado(matrices)
+
+        # Salir
         else:
             exit(0)
 
