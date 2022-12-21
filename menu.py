@@ -198,22 +198,23 @@ def calcula(matrices, nombre_inventado):
                 print("'q' para salir de la calculadora y volver al menú.")
                 print("'l' para mostrar todas las matrices y su estado.")
                 print("'l A' o 'A', siendo 'A' el nombre de la matriz, para mostrar el estado de la matriz.")
-                print("'d A' para imprimir las dimensiones de la matriz A")
-                print("'c A' para imprimir las características de la matriz A")####
+                print("'d A' para imprimir las dimensiones de la matriz 'A'")
+                print("'c A' para imprimir las características de la matriz 'A'.")####
                 print("'A + B', siendo 'A' y 'B' matrices con las mismas dimensiones.")
                 print("'A - B', siendo 'A' y 'B' matrices con las mismas dimensiones.")
                 print("'A * B', siendo 'A' y 'B' matrices, y teniendo 'A' las mismas columnas que filas tiene 'B'.")
                 print("'A * a' o 'a * A', siendo 'A' una matriz y 'a' un escalar.")
-                print("'T(A)' para obtener la traspuesta de la matriz 'A'")
-                print("'-A' para obtener la matriz opuesta de la matriz 'A'")
-                print("'In3' para obtener la matriz identidad de orden 3")
-                #print("'Nn3x2' para obtener la matriz nula de 3 filas y 2 columnas")
-                print("'max(A)' para obtener el valor máximo de los elementos")
-                print("'min(A)' para obtener el valor mínimo de los elementos")
-                print("'med(A)' para obtener la media de los valres de los elementos")
+                print("'T(A)' para obtener la traspuesta de la matriz 'A'.")
+                print("'-A' para obtener la matriz opuesta de la matriz 'A'.")
+                print("'InX' para obtener la matriz identidad de orden X. Ejemplo: 'In3'.")
+                #print("'Nn3x2' para obtener la matriz nula de 3 filas y 2 columnas.")
+                print("'max(A)' para obtener el valor máximo de los elementos de la matriz 'A'.")
+                print("'min(A)' para obtener el valor mínimo de los elementos de la matriz 'A'.")
+                print("'med(A)' para obtener la media de los valres de los elementos de la matriz 'A'.")
                 #print("Todas las operaciones entre matrices se pueden encadenar en una sola instrucción.")
                 #print("Se pueden usar los paréntesis para especificar el orden de las operaciones.")
                 print("'=<operación>' para guardar el resultado de la operación en una nueva matriz.")
+                print("    Nota: Si el resultado de la operación es un número el resultado no será guardado.")
             elif operacion == "q":
                 break
             elif operacion[0] == "l":
@@ -230,8 +231,8 @@ def calcula(matrices, nombre_inventado):
                 matriz = matrices[nombre_matriz]
                 print("La matriz",nombre_matriz)
                 matriz.imprime_tipo()
-                if matriz.es_diagonal(): print("Es diagonal")
-                if matriz.es_magica(): print("Es mágica")
+                if matriz.es_diagonal(): print("Es diagonal.")
+                if matriz.es_magica(): print("Es mágica.")
             else:
                 
                 operacion = operacion.replace(" ", "")

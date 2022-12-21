@@ -195,6 +195,8 @@ class Matriz:
                         matriz_producto[i][j]=0
                         for n in range (1,self.columnas+1):
                             matriz_producto[i][j]=float(self[i][n]*a[n][j])+matriz_producto[i][j]
+            else:
+                print("La primera matriz no tiene el mismo número de columnas que filas tiene la segunda, por lo que no se pueden multiplicar.")
         return matriz_producto
 
 
@@ -346,7 +348,13 @@ class Matriz:
 
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
-                self[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: "))
+                valor_valido = False
+                while not valor_valido:
+                    try:
+                        self[i][j]=float(input(f"Dime el elemento de la fila {i} y la columna {j}: "))
+                        valor_valido = True
+                    except:
+                        print("Error: Debes introducir un número. Por favor, inténtalo de nuevo.")
 
 
     def media(self):
@@ -471,7 +479,7 @@ class Matriz:
         Devuelve un booleano que indica si la matriz es diagonal o no.
         """
 
-        return self.es_triangular_sup() == self.es_triangular_inf()
+        return self.es_triangular_sup() == self.es_triangular_inf() == True
     
 
     def es_fila(self):
