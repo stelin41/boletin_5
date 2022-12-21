@@ -291,32 +291,42 @@ class Matriz:
 
     def diagonal_principal(self, *args):
         """
-        Devuelve los elementos de la diagonal de la matriz.
+        Devuelve los elementos de la diagonal descendente deseada de la matriz.
         También se puede obtener una diagonal diferente al indicar el desplazamiento de esta.
         Ejemplo: matriz.diagonal_principal(1)
         """
-
+        
+        Error = False
         desplazamiento = 0
         if len(args) != 0:
             desplazamiento = args[0]
-
-        elementos_diagonal = []
-        if desplazamiento < 0:
-            for j in range(1, min([self.filas+desplazamiento, self.columnas])+1):
-                i = j - desplazamiento
-                elementos_diagonal.append(self[i][j])
-
-        else:
-            for i in range(1, min([self.filas, self.columnas-desplazamiento])+1):
-                j = i + desplazamiento
-                elementos_diagonal.append(self[i][j])
+        
+        #Contemplación de valores incorrectos
+        if desplazamiento > (self.columnas+1):
+            print('Error: el desplazamiento no puede ser mayor que el número de columnas.')
+            Error = True
+        if desplazamiento < -1*(self.filas+1):
+            print('Error: el desplazamiento no puede ser menor que el número de filas.')
+            Error = True
+        
+        elementos_diagonal = []    
+        if Error == False:
+            if desplazamiento < 0:
+                for j in range(1, min([self.filas+desplazamiento, self.columnas])+1):
+                    i = j - desplazamiento
+                    elementos_diagonal.append(self[i][j])
+    
+            else:
+                for i in range(1, min([self.filas, self.columnas-desplazamiento])+1):
+                    j = i + desplazamiento
+                    elementos_diagonal.append(self[i][j])
 
         return elementos_diagonal
     
     
     def diagonal_secundaria(self):
         """
-        Devuelve los elementos de la diagonal de la matriz.
+        Devuelve los elementos de la diagonal ascendente principal de la matriz.
         """
 
         l = []
@@ -330,7 +340,6 @@ class Matriz:
         """
         Devuelve la matriz traspuesta.
         """
-
         matriztras=Matriz(self.columnas,self.filas)
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
@@ -340,7 +349,8 @@ class Matriz:
     
     def opuesta(self):
         """
-        Devuelve la matriz opuesta, asumiendo que esta se define por -A.
+        Devuelve la matriz opuesta, definida por -I * A (o A * -I).
+        Esta matriz tiene como cualidad que A + opA = 0 (Siendo 0 una matriz de todo ceros).
         """
 
         return self*(-1)
@@ -611,7 +621,7 @@ if __name__ == "__main__":
     print(matriz_cuadrada.diagonal_secundaria())
     print(matriz_cuadrada.diagonal_principal(2)) # El 2 indica que es la diagonal que empieza en la columna 3
     print(matriz_cuadrada.diagonal_principal(-1)) # El -1 indica que es la diagonal que empieza en la fila 2
-
+    print(matriz_cuadrada.diagonal_principal(-6))
     print('\n--------(6)\n')
     # 6. Obtención de las dimensiones de la matriz.
     print(otramatriz.dimension())
