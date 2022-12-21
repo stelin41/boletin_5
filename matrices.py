@@ -200,10 +200,10 @@ class Matriz:
                 print("La primera matriz no tiene el mismo número de columnas que filas tiene la segunda, por lo que no se pueden multiplicar.")
         return matriz_producto
 
-
+    
     def imprime(self):
         """
-        Presentación del estado actual de la matriz de forma visualmente agradable.
+        Presentación del las entradas de la matriz de forma visualmente agradable.
         """
         # En caso de que sea una matriz fila
         if self.filas == 1:
@@ -229,6 +229,9 @@ class Matriz:
                     # que esté correctamente presentado.
                     longitud_elemento_actual = len(str(self[i][j]))
                     espaciado = longitud_maxima[j-1]-longitud_elemento_actual+1
+                    #a y b serán las porciones del parentesis. La variable 'a' la utilizaremos para el 
+                    #lado izquierdo y b para el derecho. Como es natural, solo los elementos de los bordes 
+                    #laterales tendran valores en ellas.
                     a = b = ''
                     if j==1:
                         if i==1:
@@ -256,6 +259,7 @@ class Matriz:
             # Se quita el último salto de línea (porque sobra)
             imprimir = imprimir[:-1]
             print(imprimir)
+
         
 
     def fila(self, fila):
@@ -507,24 +511,12 @@ class Matriz:
         return self.traspuesta() == self
    
 
-    def imprime_tipo(self):
-        """
-        Imprime en pantalla las características de la matriz.
-        """
-
-        if self.es_cuadrada(): print('Es cuadrada.')
-        if self.es_fila() : print('Es una matriz fila.')
-        if self.es_columna() : print('Es una matriz columna.')
-        if self.es_simetrica() : print('Es una matriz simétrica.')
-        if self.es_triangular_sup() : print('Es triangular superior.')
-        if self.es_triangular_inf() : print('Es triangular inferior.')
-
-
     def es_magica(self):
         """
         Devuelve un booleano que indica si la matriz es mágica o no.
         """
-
+        #Como en esta función pero solo en esta función vamos a necesitar sumar 
+        #listas de elementos (filas o culumnas); crearemos aquí una función con tal propósito.
         def _suma_lista(lista):
             s = 0
             if type(lista) == Matriz:
@@ -536,15 +528,48 @@ class Matriz:
     
         magica = False
         if self.es_cuadrada():
+            
+            #Primero comprobaremos la propiedad de que todas las sumas de filas columnas y diagonales es constante.
             a = _suma_lista(self.columna(1))
             if _suma_lista(self.diagonal_principal()) == _suma_lista(self.diagonal_secundaria()) == a:
                 magica = True
             for i in range (1,self.columnas+1):
                 if _suma_lista(self.columna(i)) != a or _suma_lista(self[i]) != a:
                     magica = False
+            
+            #Ahora comprobaremos que usa todos los números del 1 al (n^2)-1. Sin repeticiones.
+            numeros=[]
+            for i in range ((self.columnas)**2):
+                numeros.append(i+1)
+            try:
+                for i in range (1,self.filas+1):
+                    for j in range (1,self.columnas+1):
+                        numeros.remove(self[i][j])
+            
+            #Solo resultará en excepción si los elementos de la lista y de la matriz no son iguales.
+            #Como en la lista están los elementos que debe tener, funciona.
+            except:
+                magica = False
         return magica  
-                
+    
+    def constante_magica(self):
+        if self.es_magica():
+            M = self.columnas*((self.columnas**2)+1)/2
+        return M
+            
+      
+    def imprime_tipo(self):
+        """
+        Imprime en pantalla las características de la matriz.
+        """
 
+        if self.es_cuadrada(): print('Es cuadrada.')
+        if self.es_fila() : print('Es una matriz fila.')
+        if self.es_columna() : print('Es una matriz columna.')
+        if self.es_simetrica() : print('Es una matriz simétrica.')
+        if self.es_triangular_sup() : print('Es triangular superior.')
+        if self.es_triangular_inf() : print('Es triangular inferior.')          
+        if self.es_magica() : print('Es Mágica. Su constante es:',self.constante_magica())
           
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para 
@@ -552,23 +577,26 @@ if __name__ == "__main__":
 
     otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
     matriz2 = Matriz([[5,6,7,8],[9,10,11,12],[1,2,3,4]])
-
+    print('\n--------(1)')
     # 1. Definición de una matriz a partir de sus dimensiones.
     mimatriz = Matriz(2,3)
 
+    print('\n--------(2)')
     # 2.a Asignación de un elemento.
     otramatriz[1][1] = 1337
-
+    
     # 2.b Obtención de un elemento.
     print(otramatriz[1][1])
 
+    print('\n--------(3)\n')
     # 3. Presentación de una matriz.
     otramatriz.imprime() 
-    print(otramatriz)
 
+    print('\n--------(4)\n')
     # 4. Obtención de una matriz por teclado.
     mimatriz.pide_matriz()
 
+    print('\n--------(5)\n')
     # 5.a Obtención de una fila de la matriz.
     print(matriz2[1])
     print(matriz2.fila(1))
@@ -584,33 +612,41 @@ if __name__ == "__main__":
     print(matriz_cuadrada.diagonal_principal(2)) # El 2 indica que es la diagonal que empieza en la columna 3
     print(matriz_cuadrada.diagonal_principal(-1)) # El -1 indica que es la diagonal que empieza en la fila 2
 
+    print('\n--------(6)\n')
     # 6. Obtención de las dimensiones de la matriz.
     print(otramatriz.dimension())
 
+    print('\n--------(7)\n')
     # 7.a Suma de matrices.
-    print(otramatriz+matriz2)
+    (otramatriz+matriz2).imprime()
 
     # 7.b Resta de matrices.
-    print(otramatriz-matriz2)
+    (otramatriz-matriz2).imprime()
 
+    print('\n--------(8)\n')
     # 8. Matriz opuesta.
-    print(otramatriz.opuesta())
+    otramatriz.opuesta().imprime()
 
+    print('\n--------(9)\n')
     # 9. Producto de matrices.
-    print(mimatriz*otramatriz)
+    (mimatriz*otramatriz).imprime()
 
+    print('\n--------(10)\n')
     # 10. Producto de un escalar por una matriz.
     print(otramatriz*2)
 
+    print('\n--------(11)\n')
     # 11.a Matriz nula a partir de las dimensiones dadas.
     print(Matriz(3,2,tipo_matriz='nula'))
 
     # 11.b Matriz identidad a partir de las dimensiones dadas.
     In3 = Matriz(3,tipo_matriz='identidad')
 
+    print('\n--------(12)\n')
     # 12. Matriz traspuesta.
-    print(otramatriz.traspuesta())
+    (otramatriz.traspuesta()).imprime()
 
+    print('\n--------(13)\n')
     # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior.
     In3.imprime_tipo()
     print(In3.es_cuadrada())
@@ -620,11 +656,13 @@ if __name__ == "__main__":
     print(In3.es_triangular_sup())
     print(In3.es_triangular_inf())
     
+    print('\n--------(14)\n')
     # 14. Matriz mágica.
     print(otramatriz.es_magica())
     magica = Matriz([[8,1,6],[3,5,7],[4,9,2]])
     print(magica.es_magica())
 
+    print('\n--------(15)\n')
     # 15.a Obtención del mayor valor
     print(otramatriz.mayor())
 
