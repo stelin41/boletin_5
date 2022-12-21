@@ -288,7 +288,7 @@ def calcula(matrices, nombre_inventado):
                     if guardar:
                         nombre_inventado = nuevo_nombre(nombre_inventado)
                         matrices[nombre_inventado] = nueva_matriz
-                        print(f"Salida guardada en la matriz \"{nombre_inventado}\".")
+                        print(f"Salida guardada en la matriz {nombre_inventado}.")
         
         except:
             print("Error: Fallo a la hora de intentar hacer la operación. Usa 'h' para obtener ayuda.")
