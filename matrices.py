@@ -14,10 +14,11 @@ class Matriz:
         """
         Declaración de una matriz.
         Puede declararse una matriz de las siguientes formas:
-            Matriz(filas, columnas) # filas y columnas son enteros mayores que 0
-            Matriz(filas, columnas, tipo_matriz='nula')
-            Matriz(filas, columnas, tipo_matriz='identidad')
-            Matriz(contenido_matriz) # contenido_matriz es de tipo lisa
+            1) Matriz(filas, columnas) # filas y columnas son enteros mayores que 0
+            2) Matriz(filas, columnas, tipo_matriz='nula')
+            3) Matriz(filas, columnas, tipo_matriz='identidad')
+            4) Matriz(filas, columnas, tipo_matriz='vacia')
+            5) Matriz(contenido_matriz) # contenido_matriz es de tipo lista
         """
         self.contenido_matriz = []
 
@@ -25,7 +26,7 @@ class Matriz:
         # una matriz fila en cada fila en vez de una simple lista. Gracias a eso se pueden hacer
         # operaciones del tipo matriz[1] + matriz[2]
 
-        # En el caso donde se define la matriz especificar las dimensiones ni el conenido.
+        # En el caso donde se define la matriz pero no se especifican las dimensiones ni el contenido.
         # Este tipo de matrices se usan solo para poder acceder a los métodos de guardado y carga.
         if len(args) == 0:
             self.filas = 0
