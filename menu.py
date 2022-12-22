@@ -13,6 +13,13 @@ from matrices import Matriz
 
 
 def si_o_no(respuesta_por_defecto):
+    """
+    Le pide al usuario confirmar o negar una acción.
+    La función recibe por parámetro la respuesta por defecto que se dará si
+    el usuario no especifica una acción (solo presiona ENTER).
+    La función devuelve True si la respuesta es afirmativa, y un False
+    si la repuesta es negativa.
+    """
     while True:
         if respuesta_por_defecto:
             respuesta = input("[S/n]: ")
@@ -30,6 +37,9 @@ def si_o_no(respuesta_por_defecto):
 
 
 def carga_estado():
+    """
+    Pide al usuario un archivo y devuelve las matrices almacenadas en él tras cargarlo.
+    """
     archivo_cargado = False
     lista_matrices = []
     while not archivo_cargado:
@@ -45,6 +55,9 @@ def carga_estado():
 
 
 def guarda_estado(matrices):
+    """
+    Guarda el estado de las matrices que se pasen por parámetro en un archivo que se le pide al usuario.
+    """
     nombre_archivo = ""
 
     while nombre_archivo == "":
@@ -56,6 +69,10 @@ def guarda_estado(matrices):
 
 
 def pide_matriz():
+    """
+    Pide al usuario las dimensiones de una matriz y su contenido.
+    La función devuelve la matriz creada.
+    """
     while True:
         dimensiones = input("Introduce el número de filas y columnas de la matriz, separados por un espacio: ")
         try:
@@ -75,6 +92,9 @@ def pide_matriz():
 
 
 def listar_matrices(matrices):
+    """
+    Imprime en pantalla las matrices que se pasaron como parámetro almacenadas en un diccionario.
+    """
     for k in matrices.keys():
         print()
         print(f"{k}:")
@@ -125,63 +145,78 @@ def nuevo_nombre(ultimo_nombre):
         return nuevo_nombre
 
 
-def haz_operacion(*args):
+def haz_operacion(operacion, matrices):
     """
-    Realiza una única operación.
-    Los primeros parámetros indican los datos a operar.
-    El último parámetro es un strings con el nombre de la operación a realizar (+, -, *, T, In, Nn, max, min, med).
-    Entradas soportadas:
-    (Matriz, Matriz, "+")
-    (Matriz, Matriz, "-")
-    (Matriz, "+")
-    (Matriz, "-")
-    (Matriz, Matriz, "*")
-    (Matriz, float/int, "*")
-    (float/int, Matriz, "*")
-    (Matriz, "T")
-    (int, "In")
-    (Matriz, "max")
-    (Matriz, "min")
-    (Matriz, "med")
+    Realiza la operación matemática especificada (véase la función calculadora).
+    Recibe por parámetro una única operación en forma de string,
+    y la lista de matrices en forma de diccionario.
+    Devuelve el resultado de la operación y si se pide guardar el resultado.
+    Este resultado puede ser de tipo float, int, Matriz o None si la operación no es válida.
+    Operaciones soportadas: "A", "-A", "+A", "A-B", "A+B", "A*B", "A*a", "a*A", "In<orden>", "max(A)", "min(A)", "med(A)".
     """
-    if len(args) == 2:
-        operacion = args[1].lower()
-        dato = args[0]
-        if type(dato) == Matriz:
-            if operacion == "+":
-                return dato
-            elif operacion == "-":
-                return dato*(-1)
-            elif operacion == "t":
-                return dato.traspuesta()
-            elif operacion == "max":
-                return dato.mayor()
-            elif operacion == "min":
-                return dato.menor()
-            elif operacion == "med":
-                return dato.media()
-        elif type(dato) == int and operacion == "in":
-            return Matriz(dato, tipo_matriz='identidad')
+    operacion = operacion.replace(" ", "")
+    nueva_matriz = None
+    guardar = False
+    if operacion[0] == "=":
+        operacion = operacion[1:]
+        guardar = True
 
-    elif len(args) == 3:
-        operacion = args[2].lower()
-        dato1 = args[0]
-        dato2 = args[1]
-        if operacion == "*":
-            if type(dato1) in [int, float]:
-                return dato2*dato1
+    try:
+        # -A
+        if operacion[0] == "-":
+            nueva_matriz = matrices[operacion[1:]].opuesta()
+        # +A
+        elif operacion[0] == "+":
+            nueva_matriz = matrices[operacion[1:]]
+        # A-B
+        elif len(operacion.split("-")) == 2:
+            matriz1, matriz2 = operacion.split("-")
+            nueva_matriz = matrices[matriz1] - matrices[matriz2]
+        # A+B
+        elif len(operacion.split("+")) == 2:
+            matriz1, matriz2 = operacion.split("+")
+            nueva_matriz = matrices[matriz1] + matrices[matriz2]
+        # A*B, A*a, a*A
+        elif len(operacion.split("*")) == 2:
+            dato1, dato2 = operacion.split("*")
+            # a*A
+            if str.isnumeric(dato1):
+                nueva_matriz = matrices[dato2] * float(dato1) 
+            # A*a
+            elif str.isnumeric(dato2):
+                nueva_matriz = matrices[dato1] * float(dato2)
+            # A*B
             else:
-                return dato1*dato2
-        elif type(dato1) == type(dato2) == Matriz:
-            if operacion == "+":
-                return dato1+dato2
-            elif operacion == "-":
-                return dato1-dato2
-    
-    raise Exception("Operación no soportada.")
+                nueva_matriz = matrices[dato1] * matrices[dato2]
+
+        # In<orden>
+        elif operacion[:2].lower() == "in":
+            nueva_matriz = Matriz(int(operacion[2:]), tipo_matriz='identidad')
+        # max(A), min(A), mid(A)
+        elif len(operacion) > 5 and operacion[3] == "(" and operacion[-1] == ")":
+            funcion = operacion[:3]
+            matriz = matrices[operacion[4:-1]]
+            if funcion == "max":
+                nueva_matriz = matriz.mayor()
+            elif funcion == "min":
+                nueva_matriz = matriz.menor()
+            elif funcion == "med":
+                nueva_matriz = matriz.media()
+        # T(A)
+        elif len(operacion) > 3 and operacion[:2].lower() == "t(" and operacion[-1] == ")":
+            nueva_matriz = matrices[operacion[2:-1]].traspuesta()
+        # A
+        else:
+            nueva_matriz = matrices[operacion]
+    except:
+        nueva_matriz = None
+        guardar = False
+    if type(nueva_matriz) == Matriz and nueva_matriz.dimension() == (1,1):
+        nueva_matriz = nueva_matriz[1]
+    return nueva_matriz, guardar
     
 
-def calcula(matrices, nombre_inventado):
+def calculadora(matrices, nombre_inventado):
     print()
     print("Calculadora iniciada.")
     print("Usa 'h' para obtener ayuda.")
@@ -199,14 +234,14 @@ def calcula(matrices, nombre_inventado):
                 print("'l' para mostrar todas las matrices y su estado.")
                 print("'l A' o 'A', siendo 'A' el nombre de la matriz, para mostrar el estado de la matriz.")
                 print("'d A' para imprimir las dimensiones de la matriz 'A'")
-                print("'c A' para imprimir las características de la matriz 'A'.")####
+                print("'c A' para imprimir las características de la matriz 'A'.")
                 print("'A + B', siendo 'A' y 'B' matrices con las mismas dimensiones.")
                 print("'A - B', siendo 'A' y 'B' matrices con las mismas dimensiones.")
                 print("'A * B', siendo 'A' y 'B' matrices, y teniendo 'A' las mismas columnas que filas tiene 'B'.")
                 print("'A * a' o 'a * A', siendo 'A' una matriz y 'a' un escalar.")
                 print("'T(A)' para obtener la traspuesta de la matriz 'A'.")
                 print("'-A' para obtener la matriz opuesta de la matriz 'A'.")
-                print("'InX' para obtener la matriz identidad de orden X. Ejemplo: 'In3'.")
+                print("'In<orden>' para obtener la matriz identidad de orden <orden>. Ejemplo: 'In3'.")
                 #print("'Nn3x2' para obtener la matriz nula de 3 filas y 2 columnas.")
                 print("'max(A)' para obtener el valor máximo de los elementos de la matriz 'A'.")
                 print("'min(A)' para obtener el valor mínimo de los elementos de la matriz 'A'.")
@@ -235,68 +270,26 @@ def calcula(matrices, nombre_inventado):
                 if matriz.es_magica(): print("Es mágica.")
             else:
                 
-                operacion = operacion.replace(" ", "")
-                nueva_matriz = None
-                guardar = False
-                if operacion[0] == "=":
-                    operacion = operacion[1:]
-                    guardar = True
-
-                try:
-                    nueva_matriz = matrices[operacion]
-
-                except:
-                    # -A, +A
-                    if operacion[0] == "-" or operacion[0] == "+":
-                        nueva_matriz = haz_operacion(matrices[operacion[1:]], operacion[0])
-                    # A-B
-                    elif len(operacion.split("-")) == 2:
-                        matriz1, matriz2 = operacion.split("-")
-                        nueva_matriz = haz_operacion(matrices[matriz1], matrices[matriz2], "-")
-                    # A+B
-                    elif len(operacion.split("+")) == 2:
-                        matriz1, matriz2 = operacion.split("+")
-                        nueva_matriz = haz_operacion(matrices[matriz1], matrices[matriz2], "+")
-                    # A*B, A*a, a*A
-                    elif len(operacion.split("*")) == 2:
-                        dato1, dato2 = operacion.split("*")
-                        # a*A
-                        if str.isnumeric(dato1):
-                            nueva_matriz = haz_operacion(int(dato1), matrices[dato2], "*")
-                        # A*a
-                        elif str.isnumeric(dato2):
-                            nueva_matriz = haz_operacion(matrices[dato1], int(dato2), "*")
-                        # A*B
-                        else:
-                            nueva_matriz = haz_operacion(matrices[dato1], matrices[dato2], "*")
-
-                    # In*
-                    elif operacion[:2].lower() == "in":
-                        nueva_matriz = haz_operacion(int(operacion[2:]), "In")
-                    # max(A), min(A), mid(A)
-                    elif operacion[3] == "(" and operacion[-1] == ")":
-                        nueva_matriz = haz_operacion(matrices[operacion[4:-1]], operacion[:3])
-                    # T(A)
-                    elif operacion[:2].lower() == "t(" and operacion[-1] == ")":
-                        nueva_matriz = haz_operacion(matrices[operacion[2:-1]], "T")
+                resultado, guardar = haz_operacion(operacion, matrices)
 
                 # Si el resultado es un número
-                if type(nueva_matriz) in [float, int]:
-                    print(nueva_matriz)
+                if type(resultado) in [float, int]:
+                    print(resultado)
                 # Si el resultado es una matriz
-                elif type(nueva_matriz) == Matriz:
-                    nueva_matriz.imprime()
+                elif type(resultado) == Matriz:
+                    resultado.imprime()
                     if guardar:
                         nombre_inventado = nuevo_nombre(nombre_inventado)
-                        matrices[nombre_inventado] = nueva_matriz
+                        matrices[nombre_inventado] = resultado
                         print(f"Salida guardada en la matriz {nombre_inventado}.")
+                else:
+                    print("Error: Fallo a la hora de intentar hacer la operación. Usa 'h' para obtener ayuda.")
         
         except:
             print("Error: Fallo a la hora de intentar hacer la operación. Usa 'h' para obtener ayuda.")
             print()
 
     return matrices, nombre_inventado
-
 
 
 def pide_operacion_menu():
@@ -348,7 +341,8 @@ def main():
 
         # Eliminar una matriz
         elif operacion == 2:
-            print("a")
+            #matrices = pide_eliminar_matriz(matrices)
+            pass
 
         # Mostrar todas las matrices y su contenido
         elif operacion == 3:
@@ -356,11 +350,12 @@ def main():
 
         # Modificar contenido de una matriz
         elif operacion == 4:
-            print("c")
+            #matrices = pile_cambiar_matriz(matrices)
+            pass
 
         # Iniciar calculadora
         elif operacion == 5:
-            matrices, nombre_inventado = calcula(matrices, nombre_inventado)
+            matrices, nombre_inventado = calculadora(matrices, nombre_inventado)
 
         # Guardar estado de las matrices
         elif operacion == 6:
