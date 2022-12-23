@@ -562,6 +562,7 @@ class Matriz:
                 magica = False
         return magica  
     
+
     def constante_magica(self):
         if self.es_magica():
             M = self.columnas*((self.columnas**2)+1)/2
@@ -574,39 +575,50 @@ class Matriz:
         """
 
         if self.es_cuadrada(): print('Es cuadrada.')
+        if self.es_diagonal(): print('Es diagonal.')
         if self.es_fila() : print('Es una matriz fila.')
         if self.es_columna() : print('Es una matriz columna.')
         if self.es_simetrica() : print('Es una matriz simétrica.')
         if self.es_triangular_sup() : print('Es triangular superior.')
-        if self.es_triangular_inf() : print('Es triangular inferior.')          
+        if self.es_triangular_inf() : print('Es triangular inferior.')
         if self.es_magica() : print('Es Mágica. Su constante es:',self.constante_magica())
           
+
+
 if __name__ == "__main__":
     # Este script prueba diferentes funcionalidades para 
     # comprobar rápidamente que todo funiona correctamente.
 
     otramatriz = Matriz([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
     matriz2 = Matriz([[5,6,7,8],[9,10,11,12],[1,2,3,4]])
-    print('\n--------(1)')
+
+    print("\nEjecutando tests...")
+
+
+    print('\n----(1)----\n')
     # 1. Definición de una matriz a partir de sus dimensiones.
     mimatriz = Matriz(2,3)
 
-    print('\n--------(2)')
+
+    print('\n----(2)----\n')
     # 2.a Asignación de un elemento.
     otramatriz[1][1] = 1337
     
     # 2.b Obtención de un elemento.
     print(otramatriz[1][1])
 
-    print('\n--------(3)\n')
+
+    print('\n----(3)----\n')
     # 3. Presentación de una matriz.
     otramatriz.imprime() 
 
-    print('\n--------(4)\n')
+
+    print('\n----(4)----\n')
     # 4. Obtención de una matriz por teclado.
     mimatriz.pide_matriz()
 
-    print('\n--------(5)\n')
+
+    print('\n----(5)----\n')
     # 5.a Obtención de una fila de la matriz.
     print(matriz2[1])
     print(matriz2.fila(1))
@@ -622,41 +634,50 @@ if __name__ == "__main__":
     print(matriz_cuadrada.diagonal_principal(2)) # El 2 indica que es la diagonal que empieza en la columna 3
     print(matriz_cuadrada.diagonal_principal(-1)) # El -1 indica que es la diagonal que empieza en la fila 2
     print(matriz_cuadrada.diagonal_principal(-6))
-    print('\n--------(6)\n')
+
+
+    print('\n----(6)----\n')
     # 6. Obtención de las dimensiones de la matriz.
     print(otramatriz.dimension())
 
-    print('\n--------(7)\n')
+
+    print('\n----(7)----\n')
     # 7.a Suma de matrices.
     (otramatriz+matriz2).imprime()
 
     # 7.b Resta de matrices.
     (otramatriz-matriz2).imprime()
 
-    print('\n--------(8)\n')
+
+    print('\n----(8)----\n')
     # 8. Matriz opuesta.
     otramatriz.opuesta().imprime()
 
-    print('\n--------(9)\n')
+
+    print('\n----(9)----\n')
     # 9. Producto de matrices.
     (mimatriz*otramatriz).imprime()
 
-    print('\n--------(10)\n')
+
+    print('\n----(10)----\n')
     # 10. Producto de un escalar por una matriz.
     print(otramatriz*2)
 
-    print('\n--------(11)\n')
+
+    print('\n----(11)----\n')
     # 11.a Matriz nula a partir de las dimensiones dadas.
     print(Matriz(3,2,tipo_matriz='nula'))
 
     # 11.b Matriz identidad a partir de las dimensiones dadas.
     In3 = Matriz(3,tipo_matriz='identidad')
 
-    print('\n--------(12)\n')
+
+    print('\n----(12)----\n')
     # 12. Matriz traspuesta.
     (otramatriz.traspuesta()).imprime()
 
-    print('\n--------(13)\n')
+
+    print('\n----(13)----\n')
     # 13. Caracterización de matrices: determinación de las condiciones de matriz cuadrada, fila, columna, simétrica, triangular superior y triangular inferior.
     In3.imprime_tipo()
     print(In3.es_cuadrada())
@@ -666,13 +687,15 @@ if __name__ == "__main__":
     print(In3.es_triangular_sup())
     print(In3.es_triangular_inf())
     
-    print('\n--------(14)\n')
+
+    print('\n----(14)----\n')
     # 14. Matriz mágica.
     print(otramatriz.es_magica())
     magica = Matriz([[8,1,6],[3,5,7],[4,9,2]])
     print(magica.es_magica())
 
-    print('\n--------(15)\n')
+
+    print('\n----(15)----\n')
     # 15.a Obtención del mayor valor
     print(otramatriz.mayor())
 
@@ -681,8 +704,9 @@ if __name__ == "__main__":
 
     # 15.c Obtención del la media de los valores de los elementos
     print(otramatriz.media())
+                                   
                                                 
-
+    print("\n----(Guardado y carga de matrices)----\n")
     # Guardar la matriz en un archivo
     Matriz().guardar('matrices.matrix', [otramatriz, matriz2])
 
@@ -690,3 +714,5 @@ if __name__ == "__main__":
     A, B = Matriz().cargar('matrices.matrix')
     print(A)
     print(B)
+
+    print("\nTests finalizados sin errores en tiempo de ejecución.")
