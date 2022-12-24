@@ -157,6 +157,8 @@ class Matriz:
                         iguales = iguales and (self[i][j] == otramatriz[i][j])
                         
         return iguales
+
+
     def __add__(self,matriz):
         """
         Suma de matrices.
@@ -164,11 +166,13 @@ class Matriz:
 
         matriz_res=Matriz(self.filas,self.columnas)
         if self.dimension() != matriz.dimension():
-            print ("Las matriz no tienen la misma dimensión y por tanto la suma no está definida")
+            raise Exception("Las matrices no tienen la misma dimensión y por tanto la suma no está definida.")
+
         else: 
             for i in range (1,self.filas+1):
                 for j in range (1,self.columnas+1):
                     matriz_res[i][j]=self[i][j]+matriz[i][j]
+
         return matriz_res
         
     
@@ -179,11 +183,13 @@ class Matriz:
 
         matriz_res=Matriz(self.filas,self.columnas)
         if self.dimension() != matriz.dimension():
-            print ("Las matriz no tienen la misma dimensión y por tanto la resta no está definida")
+            raise Exception("Las matrices no tienen la misma dimensión y por tanto la suma no está definida.")
+
         else: 
             for i in range (1,self.filas+1):
                 for j in range (1,self.columnas+1):
                     matriz_res[i][j]=self[i][j]-matriz[i][j]
+
         return matriz_res
 
 
@@ -197,6 +203,7 @@ class Matriz:
             for i in range (1,self.filas+1):
                 for j in range (1,self.columnas+1):
                     matriz_producto[i][j]=a*self[i][j]
+
         elif type(a)==Matriz:
             matriz_producto=Matriz(self.filas,a.columnas)
 
@@ -207,8 +214,9 @@ class Matriz:
                         matriz_producto[i][j]=0
                         for n in range (1,self.columnas+1):
                             matriz_producto[i][j]=float(self[i][n]*a[n][j])+matriz_producto[i][j]
+
             else:
-                print("La primera matriz no tiene el mismo número de columnas que filas tiene la segunda, por lo que no se pueden multiplicar.")
+                raise Exception("La primera matriz no tiene el mismo número de columnas que filas tiene la segunda, por lo que no se pueden multiplicar.")
         
         return matriz_producto
 
@@ -217,6 +225,7 @@ class Matriz:
         """
         Presentación del las entradas de la matriz de forma visualmente agradable.
         """
+
         # En caso de que sea una matriz fila
         if self.filas == 1:
             print(str(self[1]).replace(",", ""))
@@ -292,6 +301,7 @@ class Matriz:
         col = []
         for i in range(1,self.filas+1):
             col.append(self[i][columna])
+
         return Matriz(col)
 
 
@@ -592,6 +602,12 @@ class Matriz:
     
 
     def constante_magica(self):
+        """
+        Devuelve la constante mágica.
+        Si la matriz no es máica devuelve None.
+        """
+        
+        M = None
         if self.es_magica():
             M = self.columnas*((self.columnas**2)+1)/2
         return M
@@ -621,7 +637,6 @@ if __name__ == "__main__":
     matriz2 = Matriz([[5,6,7,8],[9,10,11,12],[1,2,3,4]])
 
     print("\nEjecutando tests...")
-
 
     print('\n----(1)----\n')
     # 1. Definición de una matriz a partir de sus dimensiones.
