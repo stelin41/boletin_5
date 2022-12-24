@@ -606,7 +606,7 @@ class Matriz:
         Devuelve la constante mágica.
         Si la matriz no es máica devuelve None.
         """
-        
+
         M = None
         if self.es_magica():
             M = self.columnas*((self.columnas**2)+1)/2
@@ -637,6 +637,7 @@ if __name__ == "__main__":
     matriz2 = Matriz([[5,6,7,8],[9,10,11,12],[1,2,3,4]])
 
     print("\nEjecutando tests...")
+
 
     print('\n----(1)----\n')
     # 1. Definición de una matriz a partir de sus dimensiones.
