@@ -217,6 +217,11 @@ def pide_eliminar_matriz(matrices):
 
 
 def pide_cambiar_matriz(matrices):
+    """
+    Le pide al usuario escoger una matriz de las que se pasaron por parámetro dentro de un diccionario.
+    Luego pide especificar un elemento y un nuevo valor para ese elemento.
+    Devuelve el diccionario de matrices con el elemento modificado.
+    """
 
     nombre_matriz = pide_escoger_matriz(matrices)
     matriz_a_cambiar = matrices[nombre_matriz]
@@ -369,8 +374,6 @@ def calculadora(matrices):
                 print("'max(A)' para obtener el valor máximo de los elementos de la matriz 'A'.")
                 print("'min(A)' para obtener el valor mínimo de los elementos de la matriz 'A'.")
                 print("'med(A)' para obtener la media de los valres de los elementos de la matriz 'A'.")
-                #print("Todas las operaciones entre matrices se pueden encadenar en una sola instrucción.")
-                #print("Se pueden usar los paréntesis para especificar el orden de las operaciones.")
                 print("'=<operación>' para guardar el resultado de la operación en una nueva matriz.")
                 print("    Nota: Si el resultado de la operación es un número el resultado no será guardado.")
 
@@ -448,6 +451,10 @@ def pide_operacion_menu():
 
 
 def main():
+    """
+    Función principal que dá inicio al programa.
+    """
+
     matrices = {}
     nombre_inventado = ""
 
@@ -497,12 +504,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-"""
-TODO:
-5.a
-5.b
-5.c
-Cancelar operación
-"""
