@@ -464,7 +464,7 @@ class Matriz:
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
                 l.append(self[i][j])
-                
+
         return l
 
 
@@ -559,6 +559,7 @@ class Matriz:
         """
         Devuelve un booleano que indica si la matriz es simétrica o no.
         """
+        
         return self.traspuesta() == self
    
 
@@ -566,6 +567,7 @@ class Matriz:
         """
         Devuelve un booleano que indica si la matriz es mágica o no.
         """
+
         #Como en esta función pero solo en esta función vamos a necesitar sumar 
         #listas de elementos (filas o culumnas); crearemos aquí una función con tal propósito.
         def _suma_lista(lista):

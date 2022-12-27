@@ -443,6 +443,7 @@ def pide_operacion_menu():
         print("(6) Guardar estado de las matrices")
         print("(7) Salir")
         opcion = input("[1-7]: ")
+        
         try:
             opcion = int(opcion)
             if opcion not in range(1,8):
