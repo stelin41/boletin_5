@@ -50,7 +50,9 @@ def carga_estado():
     archivo_cargado = False
     lista_matrices = []
     while not archivo_cargado:
-        nombre_archivo = input("Introduce el nombre completo del archivo: ")
+        nombre_archivo = input("Introduce el nombre completo del archivo (o escribe 'q' si quieres salir): ")
+        if nombre_archivo == 'q':
+            main()
         try:
             lista_matrices = Matriz().cargar(nombre_archivo)
             archivo_cargado = True
