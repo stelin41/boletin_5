@@ -335,6 +335,7 @@ class Matriz:
         if desplazamiento > (self.columnas+1):
             print('Advertencia: el desplazamiento no puede ser mayor que el número de columnas.')
             Error = True
+            
         if desplazamiento < -1*(self.filas+1):
             print('Advertencia: el desplazamiento no puede ser menor que el número de filas.')
             Error = True
@@ -559,7 +560,7 @@ class Matriz:
         """
         Devuelve un booleano que indica si la matriz es simétrica o no.
         """
-        
+
         return self.traspuesta() == self
    
 
