@@ -19,6 +19,7 @@ class Matriz:
             3) Matriz(filas, columnas, tipo_matriz='identidad')
             4) Matriz(filas, columnas, tipo_matriz='vacia')
             5) Matriz(contenido_matriz) # contenido_matriz es una lista unidimensional o bidimensional con el contenido de la matriz.
+            6) Matriz() # Solo se usa para acceder a los métodos guardar y cargar.
         """
 
         self.contenido_matriz = []
@@ -80,8 +81,10 @@ class Matriz:
             else:
                 if tipo_matriz == 'vacia':
                     contenido = None
+
                 elif tipo_matriz == 'nula':
                     contenido = 0
+
                 else:
                     raise TypeError(f'No se soporta una matriz de tipo {tipo_matriz}.')
                     
@@ -198,7 +201,8 @@ class Matriz:
         Multiplicación entre matrices o entre una matriz y un escalar.
         """
 
-        if type(a)==float or type(a)==int:
+        # En caso de que sea una multiplicación por un escalar.
+        if type(a) in [float, int]:
             matriz_producto=Matriz(self.filas,self.columnas)
             for i in range (1,self.filas+1):
                 for j in range (1,self.columnas+1):
@@ -218,6 +222,9 @@ class Matriz:
             else:
                 raise Exception("La primera matriz no tiene el mismo número de columnas que filas tiene la segunda, por lo que no se pueden multiplicar.")
         
+        else:
+            raise TypeError("Operación no soportada. Las matrices solo se pueden multiplicar por otra matriz o otro escalar.")
+
         return matriz_producto
 
     
@@ -283,7 +290,6 @@ class Matriz:
             imprimir = imprimir[:-1]
             print(imprimir)
 
-        
 
     def fila(self, fila):
         """
@@ -325,7 +331,7 @@ class Matriz:
         if len(args) != 0:
             desplazamiento = args[0]
         
-        #Contemplación de valores incorrectos
+        # Contemplación de valores incorrectos
         if desplazamiento > (self.columnas+1):
             print('Advertencia: el desplazamiento no puede ser mayor que el número de columnas.')
             Error = True
@@ -357,6 +363,7 @@ class Matriz:
         tamanho_diagonal = min([self.filas, self.columnas])
         for i in range (1,tamanho_diagonal+1):
             l.append(self[i][tamanho_diagonal+1-i])
+
         return l
           
         
@@ -456,7 +463,8 @@ class Matriz:
         l=[]
         for i in range (1,self.filas+1):
             for j in range (1,self.columnas+1):
-                l.append(self[i][j]) 
+                l.append(self[i][j])
+                
         return l
 
 

@@ -39,7 +39,7 @@ def si_o_no(respuesta_por_defecto):
             return False
 
         else:
-            print("Error: Respuesta no reconocida. Debes introducir \"Sí\" o \"No\"")
+            print("Error: Respuesta no reconocida. Debes introducir 'Sí' o 'No'")
 
 
 def carga_estado():
@@ -107,14 +107,15 @@ def listar_matrices(matrices):
     """
     Imprime en pantalla las matrices que se pasaron como parámetro almacenadas en un diccionario.
     """
-
-    for k in matrices.keys():
+    nombres = list(matrices.keys())
+    nombres.sort()
+    for k in nombres:
         print()
         print(f"{k}:")
         matrices[k].imprime()
 
 
-def nuevo_nombre(ultimo_nombre):
+def genera_nombre(ultimo_nombre):
     """
     Genera nuevos nombres para las matrices.
     Ejemplos:
@@ -137,7 +138,7 @@ def nuevo_nombre(ultimo_nombre):
         return "A"
 
     else:
-        nuevo_nombre = ""
+        bre = ""
 
         # Si esto ocurre entonces es necesario crear una nueva letra
         if len(set(ultimo_nombre)) == 1 and list(set(ultimo_nombre))[0] == "Z":
@@ -157,6 +158,20 @@ def nuevo_nombre(ultimo_nombre):
             nuevo_nombre = ultimo_nombre[:i] + nuevo_nombre
 
         return nuevo_nombre
+
+
+def decide_nombre(matrices):
+    """
+    Genera un nombre que no se esté usando. Recibe por parámetro un diccionario de matrices y devuelve
+    un nombre que no tiene entrada en el diccionario.
+    """
+
+    nombres_usados = list(matrices.keys())
+    nombre = "A"
+    while nombre in nombres_usados:
+        nombre = genera_nombre(nombre)
+    
+    return nombre
 
 
 def pide_escoger_matriz(matrices):
@@ -189,31 +204,19 @@ def pide_escoger_matriz(matrices):
 def pide_eliminar_matriz(matrices):
     """
     Le pide al usuario eliminar una matriz almacenada en el diccionario de matrices que se pasa por parámetro a la función.
-    La función devuelve un nuevo diccionario sin la matriz eliminada por el usuario, y el nombre de la última matriz.
+    La función devuelve un nuevo diccionario sin la matriz eliminada por el usuario.
     """
 
     eliminar = pide_escoger_matriz(matrices)
     nombres_matrices = list(matrices.keys())
-    # Para conservar la organización de las matrices, se sobreescribe la matriz a eliminar
-    # con la matriz contigua a esta (si esixte), y luego esa otra matriz se vuelve a sobreescribir
-    # con la siguiente, y el proceso se repite hasta llegar a la última matriz. Finalmete se elimina
-    # la última matriz (que estará repetida).
-    if eliminar != "":
-        matriz_a_desplazar = eliminar
-        matriz_desplazada = eliminar
-        while matriz_a_desplazar != nombres_matrices[-1]:
-            matriz_desplazada = matriz_a_desplazar
-            matriz_a_desplazar = nuevo_nombre(matriz_a_desplazar)
-            matrices[matriz_desplazada] = matrices[matriz_a_desplazar]
-
-        del matrices[matriz_a_desplazar]
+    if eliminar in nombres_matrices:
+        del matrices[eliminar]
         print("\nMatriz eliminada con éxito.")
 
-    if len(matrices) > 1:
-        return matrices, nombres_matrices[-2]
-
     else:
-        return matrices, nombres_matrices[-1]
+        print(f"\nLa matriz {eliminar} no esixte.")
+
+    return matrices
 
 
 def pide_cambiar_matriz(matrices):
@@ -343,13 +346,12 @@ def haz_operacion(operacion, matrices):
 def calculadora(matrices):
     """
     Inicia una calculadora de matrices. Recibe por parámetro un diccionario de matrices y
-    tras haber hecho los cálculos devuelve un nuevo diccionario de matrices y el nombre de la última matriz.
+    tras haber hecho los cálculos devuelve un nuevo diccionario de matrices.
     """
 
     print("\nCalculadora iniciada.")
     print("Usa 'h' para obtener ayuda.")
 
-    nombre_inventado = list(matrices.keys())[-1]
     while True:
         operacion = input(">> ")
         try:
@@ -409,7 +411,7 @@ def calculadora(matrices):
                 elif type(resultado) == Matriz:
                     resultado.imprime()
                     if guardar:
-                        nombre_inventado = nuevo_nombre(nombre_inventado)
+                        nombre_inventado = decide_nombre(matrices)
                         matrices[nombre_inventado] = resultado
                         print(f"Salida guardada en la matriz {nombre_inventado}.")
 
@@ -419,7 +421,7 @@ def calculadora(matrices):
         except:
             print("Error: Fallo a la hora de intentar hacer la operación. Usa 'h' para obtener ayuda.\n")
 
-    return matrices, nombre_inventado
+    return matrices
 
 
 def pide_operacion_menu():
@@ -456,14 +458,13 @@ def main():
     """
 
     matrices = {}
-    nombre_inventado = ""
 
     print("Herramienta para realizar cálculos con matrices.\n")
     print("¿Deseas cargar un estado previo de las matrices?")
     if si_o_no(False):
         matrices_cargadas = carga_estado()
         for matriz in matrices_cargadas:
-            nombre_inventado = nuevo_nombre(nombre_inventado)
+            nombre_inventado = genera_nombre(nombre_inventado)
             matrices[nombre_inventado] = matriz
 
     while True:
@@ -472,13 +473,13 @@ def main():
         # Crear nueva matriz
         if operacion == 1:
             nueva_matriz = pide_matriz()
-            nombre_inventado = nuevo_nombre(nombre_inventado)
+            nombre_inventado = decide_nombre(matrices)
             matrices[nombre_inventado] = nueva_matriz
-            print(f"Matriz \"{nombre_inventado}\" creada con éxito.")
+            print(f"Matriz '{nombre_inventado}'creada con éxito.")
 
         # Eliminar una matriz
         elif operacion == 2:
-            matrices, nombre_inventado = pide_eliminar_matriz(matrices)
+            matrices = pide_eliminar_matriz(matrices)
 
         # Mostrar todas las matrices y su contenido
         elif operacion == 3:
@@ -490,7 +491,7 @@ def main():
 
         # Iniciar calculadora
         elif operacion == 5:
-            matrices, nombre_inventado = calculadora(matrices)
+            matrices = calculadora(matrices)
 
         # Guardar estado de las matrices
         elif operacion == 6:
