@@ -509,27 +509,32 @@ class Matriz:
         return self.columnas == self.filas
     
 
-    def es_triangular_inf(self):
+    def es_triangular_sup(self):
         """
         Devuelve un booleano que indica si la matriz es triangular inferior o no.
         """
 
         triangular_inf = True
-        if not self.es_cuadrada: triangular_inf = False
-        for i in range (1,self.filas+1):
-            for j in range (1,self.columnas+1):
-                if i>j and self[i][j] != 0:
-                    triangular_inf = False
+        if not self.es_cuadrada:
+            triangular_inf = False
+
+        else:
+            for i in range (1,self.filas+1):
+                if self[i][i] == 0:
+                    triang_inf = False
+                for j in range (1,self.columnas+1):
+                    if i>j and self[i][j] != 0:
+                        triangular_inf = False
 
         return triangular_inf
     
 
-    def es_triangular_sup(self):
+    def es_triangular_inf(self):
         """
         Devuelve un booleano que indica si la matriz es triangular superior o no.
         """
 
-        return self.traspuesta().es_triangular_inf()
+        return self.traspuesta().es_triangular_sup()
     
 
     def es_diagonal(self):
