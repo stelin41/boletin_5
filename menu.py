@@ -140,7 +140,7 @@ def genera_nombre(ultimo_nombre):
         return "A"
 
     else:
-        bre = ""
+        nuevo_nombre = ""
 
         # Si esto ocurre entonces es necesario crear una nueva letra
         if len(set(ultimo_nombre)) == 1 and list(set(ultimo_nombre))[0] == "Z":
@@ -467,7 +467,7 @@ def main():
     if si_o_no(False):
         matrices_cargadas = carga_estado()
         for matriz in matrices_cargadas:
-            nombre_inventado = genera_nombre(nombre_inventado)
+            nombre_inventado = decide_nombre(matrices)
             matrices[nombre_inventado] = matriz
 
     while True:
